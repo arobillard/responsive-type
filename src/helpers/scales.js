@@ -10,4 +10,13 @@ export function generateFontSizeByScale(scale, step, as_rem = true) {
   if (as_rem) {
     return `${font_size}rem`;
   }
+  return font_size;
+}
+
+export function generateClampedFontSize(lower_scale, upper_scale, step) {
+  return `clamp(
+    ${generateFontSizeByScale(lower_scale, step)},
+    4vw,
+    ${generateFontSizeByScale(upper_scale, step)}
+  )`;
 }

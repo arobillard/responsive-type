@@ -1,14 +1,17 @@
-import { generateFontSizeByScale } from '@/helpers/scales';
+import {
+  generateFontSizeByScale,
+  generateClampedFontSize,
+} from '@/helpers/scales';
 import layout from '../styles/layout.module.css';
 
-export default function ScalesPreview({ scale }) {
+export default function ScalesPreview({ scale, lowerScale, upperScale }) {
   return (
     <section className={layout.preview}>
       <div className={layout.container}>
         <h2>Preview</h2>
         <h1
           style={{
-            fontSize: generateFontSizeByScale(scale, 6),
+            fontSize: generateClampedFontSize(lowerScale, upperScale, 6),
             marginBottom: '0.5rem',
             lineHeight: 1.1,
           }}
@@ -17,7 +20,7 @@ export default function ScalesPreview({ scale }) {
         </h1>
         <h2
           style={{
-            fontSize: generateFontSizeByScale(scale, 5),
+            fontSize: generateClampedFontSize(lowerScale, upperScale, 5),
             marginBottom: '0.5rem',
             lineHeight: 1.2,
           }}
@@ -26,7 +29,7 @@ export default function ScalesPreview({ scale }) {
         </h2>
         <h3
           style={{
-            fontSize: generateFontSizeByScale(scale, 4),
+            fontSize: generateClampedFontSize(lowerScale, upperScale, 4),
             marginBottom: '0.5rem',
             lineHeight: 1.3,
           }}
@@ -35,7 +38,7 @@ export default function ScalesPreview({ scale }) {
         </h3>
         <h4
           style={{
-            fontSize: generateFontSizeByScale(scale, 3),
+            fontSize: generateClampedFontSize(lowerScale, upperScale, 3),
             marginBottom: '0.5rem',
           }}
         >
@@ -43,13 +46,17 @@ export default function ScalesPreview({ scale }) {
         </h4>
         <h5
           style={{
-            fontSize: generateFontSizeByScale(scale, 2),
+            fontSize: generateClampedFontSize(lowerScale, upperScale, 2),
             marginBottom: '0.5rem',
           }}
         >
           Heading 5
         </h5>
-        <h6 style={{ fontSize: generateFontSizeByScale(scale, 1) }}>
+        <h6
+          style={{
+            fontSize: generateClampedFontSize(lowerScale, upperScale, 1),
+          }}
+        >
           Heading 6
         </h6>
         <p>

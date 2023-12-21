@@ -1,6 +1,13 @@
 import { useState } from 'react';
 
-export default function Controls({ scale, setScale }) {
+export default function Controls({
+  scale,
+  setScale,
+  lowerScale,
+  setLowerScale,
+  upperScale,
+  setUpperScale,
+}) {
   const scaleOptions = [
     { value: 1.067, label: 'Minor Second' },
     { value: 1.125, label: 'Major Second' },
@@ -16,7 +23,33 @@ export default function Controls({ scale, setScale }) {
     <section>
       <h2>Controls</h2>
 
-      <label htmlFor="scale">Scale</label>
+      <label htmlFor="lower-scale">Lower Scale</label>
+      <select
+        name="lower-scale"
+        id="lower-scale"
+        onChange={(e) => setLowerScale(e.target.value)}
+        value={lowerScale}
+      >
+        {scaleOptions.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {value} – {label}
+          </option>
+        ))}
+      </select>
+      <label htmlFor="upper-scale">Upper Scale</label>
+      <select
+        name="upper-scale"
+        id="upper-scale"
+        onChange={(e) => setUpperScale(e.target.value)}
+        value={upperScale}
+      >
+        {scaleOptions.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {value} – {label}
+          </option>
+        ))}
+      </select>
+      {/* <label htmlFor="scale">Scale</label>
       <select
         name="scale"
         id="scale"
@@ -28,7 +61,7 @@ export default function Controls({ scale, setScale }) {
             {value} – {label}
           </option>
         ))}
-      </select>
+      </select> */}
     </section>
   );
 }
