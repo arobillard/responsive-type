@@ -1,0 +1,53 @@
+:root {
+  --color-primary: #930;
+  --color-primary-light: #c63;
+  --color-primary-dark: #610;
+
+  --font-primary: 'Roboto', sans-serif;
+
+  --container: 65em;
+  --container-narrow: 35em;
+
+  --spacer-base: 1.5rem;
+  --spacer-xs: calc(var(--spacer-base) / 6);
+  --spacer-s: calc(var(--spacer-base) / 3);
+  --spacer-m: calc(var(--spacer-base) / 2);
+  --spacer-l: calc(var(--spacer-base) * 2);
+  --spacer-xl: calc(var(--spacer-base) * 3);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-primary);
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0 0 1.5rem;
+}
+
+input:where(:not([type='checkbox'], [type='radio'])),
+select,
+textarea {
+  display: block;
+  width: 100%;
+  padding: var(--spacer-s);
+  background-color: #fff;
+  border: 0.0625rem solid #ccc;
+  border-radius: var(--spacer-xs);
+}

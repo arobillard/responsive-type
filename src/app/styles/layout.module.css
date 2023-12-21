@@ -1,0 +1,30 @@
+.container {
+  --container-width: var(--container);
+  width: min(100%, var(--container-width));
+  margin: 0 auto;
+  padding-left: var(--spacer-base);
+  padding-right: var(--spacer-base);
+}
+
+.container--narrow {
+  --container-width: var(--container-narrow);
+}
+
+.layout {
+  display: grid;
+  gap: 1.5rem;
+  min-height: 100dvh;
+
+  @media only screen and (min-width: 50em) {
+    grid-template-columns: 20rem 1fr;
+  }
+}
+
+.sidebar {
+  padding: var(--spacer-base);
+  background-color: #f2f2f2;
+}
+
+.preview {
+  padding: var(--spacer-base) 0;
+}
