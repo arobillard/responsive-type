@@ -64,6 +64,7 @@ export default function ScalesPreview({
               <div className={scalesPreview.preview_heading_code}>
                 <code>{tag}</code>
                 <code>font-size: {font_size};</code>
+                <button>Copy</button>
               </div>
               <Heading
                 className={scalesPreview.preview_heading}

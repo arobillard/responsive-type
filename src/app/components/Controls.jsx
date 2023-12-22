@@ -7,6 +7,10 @@ export default function Controls({
   setLowerScale,
   upperScale,
   setUpperScale,
+  sentence,
+  setSentence,
+  paragraph,
+  setParagraph,
 }) {
   const scaleOptions = [
     { value: 1.067, label: 'Minor Second' },
@@ -64,6 +68,27 @@ export default function Controls({
             </option>
           ))}
         </select>
+      </div>
+
+      <h3 class={controls.controls_heading}>Content</h3>
+      <div className={controls.grid_unit}>
+        <label htmlFor="sentence">Heading</label>
+        <input
+          type="text"
+          id="sentence"
+          name="sentence"
+          value={sentence}
+          onChange={(e) => setSentence(e.target.value)}
+        />
+      </div>
+      <div className={controls.grid_unit}>
+        <label htmlFor="paragraph">Paragraph</label>
+        <textarea
+          id="paragraph"
+          name="paragraph"
+          value={paragraph}
+          onChange={(e) => setParagraph(e.target.value)}
+        />
       </div>
     </section>
   );

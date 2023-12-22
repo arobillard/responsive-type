@@ -29,7 +29,9 @@ export default function Home() {
           setLowerScale={setLowerScale}
           upperScale={upperScale}
           setUpperScale={setUpperScale}
+          sentence={sentence}
           setSentence={setSentence}
+          paragraph={paragraph}
           setParagraph={setParagraph}
         />
       </div>

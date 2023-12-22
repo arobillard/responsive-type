@@ -3,8 +3,6 @@
   --color-primary-light: #c63;
   --color-primary-dark: #610;
 
-  --font-primary: 'Roboto', sans-serif;
-
   --container: 65em;
   --container-narrow: 35em;
 
@@ -57,6 +55,7 @@ textarea {
   background-color: #fff;
   border: 0.0625rem solid #ccc;
   border-radius: var(--spacer-xs);
+  font: inherit;
 
   & + label {
     margin-block-start: var(--spacer-xs);
