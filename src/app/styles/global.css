@@ -14,6 +14,12 @@
   --spacer-m: calc(var(--spacer-base) / 2);
   --spacer-l: calc(var(--spacer-base) * 2);
   --spacer-xl: calc(var(--spacer-base) * 3);
+
+  --radius: calc(var(--spacer-base) / 3);
+  --radius-small: calc(var(--radius) / 2);
+  --radius-large: calc(var(--radius) * 2);
+
+  --transition: 0.2s;
 }
 
 *,
@@ -39,6 +45,7 @@ h5,
 h6,
 p {
   margin: 0 0 1.5rem;
+  transition: font-size var(--transition);
 }
 
 input:where(:not([type='checkbox'], [type='radio'])),
@@ -50,4 +57,39 @@ textarea {
   background-color: #fff;
   border: 0.0625rem solid #ccc;
   border-radius: var(--spacer-xs);
+
+  & + label {
+    margin-block-start: var(--spacer-xs);
+  }
+}
+
+label:where(
+    :not(:has(+ [type='checkbox'], + [type='radio'])):not(
+        [type='checkbox'] + label,
+        [type='radio'] + label
+      )
+  ) {
+  display: block;
+  width: 100%;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+label:has(+ input, + select, + textarea) {
+  margin-block-end: var(--spacer-xs);
+}
+
+code {
+  padding: var(--spacer-xs) var(--spacer-s);
+  border-radius: var(--radius-small);
+  background-color: #f2f2f2;
+  border: 0.0625rem solid #ccc;
+  &:has(+ code) {
+    border-radius: var(--radius-small) 0 0 var(--radius-small);
+  }
+  & + code {
+    border-radius: 0 var(--radius-small) var(--radius-small) 0;
+    border-inline-start: 0;
+  }
 }

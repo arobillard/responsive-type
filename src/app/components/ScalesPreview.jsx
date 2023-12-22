@@ -1,70 +1,85 @@
-import {
-  generateFontSizeByScale,
-  generateClampedFontSize,
-} from '@/helpers/scales';
-import layout from '../styles/layout.module.css';
+import { generateClampedFontSize } from '@/helpers/scales';
+import scalesPreview from '../styles/scalesPreview.module.css';
+import Heading from './Heading';
 
-export default function ScalesPreview({ scale, lowerScale, upperScale }) {
+export default function ScalesPreview({
+  lowerScale,
+  upperScale,
+  scalingType,
+  sentence,
+  paragraph,
+}) {
+  const headings = [
+    {
+      tag: 'h1',
+      step: 6,
+      style: {
+        lineHeight: 1.1,
+      },
+    },
+    {
+      tag: 'h2',
+      step: 5,
+      style: {
+        lineHeight: 1.2,
+      },
+    },
+    {
+      tag: 'h3',
+      step: 4,
+      style: {
+        lineHeight: 1.3,
+      },
+    },
+    {
+      tag: 'h4',
+      step: 3,
+    },
+    {
+      tag: 'h5',
+      step: 2,
+    },
+    {
+      tag: 'h6',
+      step: 1,
+    },
+  ];
+
   return (
-    <section className={layout.preview}>
-      <div className={layout.container}>
-        <h2>Preview</h2>
-        <h1
-          style={{
-            fontSize: generateClampedFontSize(lowerScale, upperScale, 6),
-            marginBottom: '0.5rem',
-            lineHeight: 1.1,
-          }}
-        >
-          Heading 1
-        </h1>
-        <h2
-          style={{
-            fontSize: generateClampedFontSize(lowerScale, upperScale, 5),
-            marginBottom: '0.5rem',
-            lineHeight: 1.2,
-          }}
-        >
-          Heading 2
-        </h2>
-        <h3
-          style={{
-            fontSize: generateClampedFontSize(lowerScale, upperScale, 4),
-            marginBottom: '0.5rem',
-            lineHeight: 1.3,
-          }}
-        >
-          Heading 3
-        </h3>
-        <h4
-          style={{
-            fontSize: generateClampedFontSize(lowerScale, upperScale, 3),
-            marginBottom: '0.5rem',
-          }}
-        >
-          Heading 4
-        </h4>
-        <h5
-          style={{
-            fontSize: generateClampedFontSize(lowerScale, upperScale, 2),
-            marginBottom: '0.5rem',
-          }}
-        >
-          Heading 5
-        </h5>
-        <h6
-          style={{
-            fontSize: generateClampedFontSize(lowerScale, upperScale, 1),
-          }}
-        >
-          Heading 6
-        </h6>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, omnis
-          est iure necessitatibus nam esse laudantium. Tenetur laudantium enim
-          tempora veritatis ratione quidem soluta! Libero sunt modi vel autem
-          repellendus.
-        </p>
+    <section className={scalesPreview.preview}>
+      <h2>Preview</h2>
+      <div className={scalesPreview.preview_content}>
+        {headings.map(({ tag, step, style }) => {
+          const font_size = generateClampedFontSize(
+            lowerScale,
+            upperScale,
+            scalingType,
+            step
+          );
+          return (
+            <div
+              key={`heading-${step}`}
+              className={scalesPreview.preview_heading_wrap}
+            >
+              <div className={scalesPreview.preview_heading_code}>
+                <code>{tag}</code>
+                <code>font-size: {font_size};</code>
+              </div>
+              <Heading
+                className={scalesPreview.preview_heading}
+                tag={tag}
+                style={{
+                  fontSize: font_size,
+                  marginBottom: '0.5rem',
+                  ...style,
+                }}
+              >
+                {sentence}
+              </Heading>
+            </div>
+          );
+        })}
+        <p>{paragraph}</p>
       </div>
     </section>
   );

@@ -1,0 +1,8 @@
+.controls {
+  display: grid;
+  gap: var(--spacer-m);
+}
+
+.controls_heading {
+  margin: 0;
+}

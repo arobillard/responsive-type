@@ -13,10 +13,17 @@ export function generateFontSizeByScale(scale, step, as_rem = true) {
   return font_size;
 }
 
-export function generateClampedFontSize(lower_scale, upper_scale, step) {
-  return `clamp(
-    ${generateFontSizeByScale(lower_scale, step)},
-    4vw,
-    ${generateFontSizeByScale(upper_scale, step)}
-  )`;
+export function generateClampedFontSize(
+  lower_scale,
+  upper_scale,
+  scalingType,
+  step
+) {
+  const lower_value = generateFontSizeByScale(lower_scale, step, false);
+  const upper_value = generateFontSizeByScale(upper_scale, step, false);
+
+  const scaling_value =
+    Math.round(((lower_value + upper_value) / 2 / 50) * 100 * 1000) / 1000;
+
+  return `clamp(${lower_value}rem, ${scaling_value}${scalingType}, ${upper_value}rem)`;
 }

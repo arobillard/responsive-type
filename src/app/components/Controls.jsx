@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import controls from '../styles/controls.module.css';
 
 export default function Controls({
-  scale,
-  setScale,
+  scalingType,
+  setScalingType,
   lowerScale,
   setLowerScale,
   upperScale,
@@ -20,48 +20,51 @@ export default function Controls({
   ];
 
   return (
-    <section>
-      <h2>Controls</h2>
+    <section className={controls.controls}>
+      <h2 className={controls.controls_heading}>Controls</h2>
 
-      <label htmlFor="lower-scale">Lower Scale</label>
-      <select
-        name="lower-scale"
-        id="lower-scale"
-        onChange={(e) => setLowerScale(e.target.value)}
-        value={lowerScale}
-      >
-        {scaleOptions.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {value} – {label}
-          </option>
-        ))}
-      </select>
-      <label htmlFor="upper-scale">Upper Scale</label>
-      <select
-        name="upper-scale"
-        id="upper-scale"
-        onChange={(e) => setUpperScale(e.target.value)}
-        value={upperScale}
-      >
-        {scaleOptions.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {value} – {label}
-          </option>
-        ))}
-      </select>
-      {/* <label htmlFor="scale">Scale</label>
-      <select
-        name="scale"
-        id="scale"
-        onChange={(e) => setScale(e.target.value)}
-        value={scale}
-      >
-        {scaleOptions.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {value} – {label}
-          </option>
-        ))}
-      </select> */}
+      <div className={controls.grid_unit}>
+        <label htmlFor="scaling-type">Scaling Type</label>
+        <select
+          name="scaling-type"
+          id="scaling-type"
+          onChange={(e) => setScalingType(e.target.value)}
+          value={scalingType}
+        >
+          <option value="cqi">cqi</option>
+          <option value="vw">vw</option>
+        </select>
+      </div>
+      <div className={controls.grid_unit}>
+        <label htmlFor="lower-scale">Lower Scale</label>
+        <select
+          name="lower-scale"
+          id="lower-scale"
+          onChange={(e) => setLowerScale(e.target.value)}
+          value={lowerScale}
+        >
+          {scaleOptions.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {value} – {label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={controls.grid_unit}>
+        <label htmlFor="upper-scale">Upper Scale</label>
+        <select
+          name="upper-scale"
+          id="upper-scale"
+          onChange={(e) => setUpperScale(e.target.value)}
+          value={upperScale}
+        >
+          {scaleOptions.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {value} – {label}
+            </option>
+          ))}
+        </select>
+      </div>
     </section>
   );
 }
