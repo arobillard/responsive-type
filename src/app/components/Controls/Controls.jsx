@@ -1,4 +1,16 @@
+import { useState } from 'react';
 import controls from './controls.module.css';
+
+const scaleOptions = [
+  { value: 1.067, label: 'Minor Second' },
+  { value: 1.125, label: 'Major Second' },
+  { value: 1.2, label: 'Minor Third' },
+  { value: 1.25, label: 'Major Third' },
+  { value: 1.333, label: 'Perfect Fourth' },
+  { value: 1.414, label: 'Augmented Fourth' },
+  { value: 1.5, label: 'Perfect Fifth' },
+  { value: 1.618, label: 'Golden Ratio' },
+];
 
 export default function Controls({
   scalingType,
@@ -12,16 +24,34 @@ export default function Controls({
   paragraph,
   setParagraph,
 }) {
-  const scaleOptions = [
-    { value: 1.067, label: 'Minor Second' },
-    { value: 1.125, label: 'Major Second' },
-    { value: 1.2, label: 'Minor Third' },
-    { value: 1.25, label: 'Major Third' },
-    { value: 1.333, label: 'Perfect Fourth' },
-    { value: 1.414, label: 'Augmented Fourth' },
-    { value: 1.5, label: 'Perfect Fifth' },
-    { value: 1.618, label: 'Golden Ratio' },
-  ];
+  const [lowerScaleOptions, setLowerScaleOptions] = useState([
+    ...scaleOptions.slice(0, 3),
+  ]);
+  const [upperScaleOptions, setUpperScaleOptions] = useState([
+    ...scaleOptions.slice(4, scaleOptions.length),
+  ]);
+
+  function updateLowerScale(value) {
+    setLowerScale(value);
+
+    const scaleIndex = scaleOptions.findIndex((option) => {
+      return option.value === parseFloat(value);
+    });
+
+    setUpperScaleOptions([
+      ...scaleOptions.slice(scaleIndex + 1, scaleOptions.length),
+    ]);
+  }
+
+  function updateUpperScale(value) {
+    setUpperScale(value);
+
+    const scaleIndex = scaleOptions.findIndex((option) => {
+      return option.value === parseFloat(value);
+    });
+
+    setLowerScaleOptions([...scaleOptions.slice(0, scaleIndex)]);
+  }
 
   return (
     <section id="controls" className={controls.controls}>
@@ -44,10 +74,10 @@ export default function Controls({
         <select
           name="lower-scale"
           id="lower-scale"
-          onChange={(e) => setLowerScale(e.target.value)}
+          onChange={(e) => updateLowerScale(e.target.value)}
           value={lowerScale}
         >
-          {scaleOptions.map(({ value, label }) => (
+          {lowerScaleOptions.map(({ value, label }) => (
             <option key={value} value={value}>
               {value} – {label}
             </option>
@@ -59,10 +89,10 @@ export default function Controls({
         <select
           name="upper-scale"
           id="upper-scale"
-          onChange={(e) => setUpperScale(e.target.value)}
+          onChange={(e) => updateUpperScale(e.target.value)}
           value={upperScale}
         >
-          {scaleOptions.map(({ value, label }) => (
+          {upperScaleOptions.map(({ value, label }) => (
             <option key={value} value={value}>
               {value} – {label}
             </option>
