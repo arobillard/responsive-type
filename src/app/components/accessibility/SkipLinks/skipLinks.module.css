@@ -1,0 +1,21 @@
+.skipLinks {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.skipLinks_link {
+  position: absolute;
+  inset-block-start: -10rem;
+  inset-inline-start: var(--spacer-m);
+  padding: var(--spacer-s) var(--spacer-base);
+  background-color: var(--color-accent);
+  color: #000;
+  border-radius: var(--radius);
+  text-decoration: none;
+  z-index: 10000;
+}
+
+.skipLinks_link:focus {
+  inset-block-start: var(--spacer-m);
+}

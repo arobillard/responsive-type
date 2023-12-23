@@ -4,6 +4,16 @@
   width: 100%;
 }
 
+.preview_title {
+  text-transform: uppercase;
+  margin: 0;
+  font-size: var(--type-step-3);
+  border-block-end: 0.125rem double #eee;
+  margin-inline: calc(var(--spacer-base) * -1);
+  padding-inline: var(--spacer-base);
+  padding-block-end: var(--spacer-s);
+}
+
 .preview_content {
   padding: var(--spacer-base);
   margin-inline: calc(var(--spacer-base) * -1);
@@ -13,10 +23,6 @@
 
 .preview_heading_wrap {
   margin-block-end: var(--spacer-base);
-}
-
-.preview_heading_code {
-  margin-block-end: var(--spacer-xs);
 }
 
 .preview_heading {

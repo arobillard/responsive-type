@@ -18,8 +18,3 @@
     grid-template-columns: 20rem 1fr;
   }
 }
-
-.sidebar {
-  padding: var(--spacer-base);
-  background-color: #f2f2f2;
-}

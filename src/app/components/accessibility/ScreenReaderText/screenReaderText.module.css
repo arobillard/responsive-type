@@ -1,0 +1,5 @@
+.screenReaderText {
+  position: absolute;
+  white-space: nowrap;
+  clip-path: polygon(0 0, 0.1% 0, 0.1% 0.1%, 0 0.1%);
+}

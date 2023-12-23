@@ -1,5 +1,7 @@
 import { Noto_Sans, Noto_Serif } from 'next/font/google';
 import './styles/global.css';
+import SkipLinks from './components/accessibility/SkipLinks/SkipLinks';
+import Footer from './components/Footer/Footer';
 
 const noto_sans = Noto_Sans({
   subsets: ['latin'],
@@ -24,7 +26,11 @@ export default function RootLayout({ children }) {
       lang="en-CA"
       className={`${noto_sans.variable} ${noto_serif.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <SkipLinks />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

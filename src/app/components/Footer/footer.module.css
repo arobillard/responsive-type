@@ -1,0 +1,14 @@
+.footer {
+  background-color: var(--color-secondary);
+  /* color: #fff; */
+  padding: var(--spacer-m) 0;
+  text-align: center;
+}
+
+.footer_link {
+  color: #000;
+}
+
+.footer_link:where(:hover, :focus-visible) {
+  text-decoration-color: var(--color-accent-bright);
+}

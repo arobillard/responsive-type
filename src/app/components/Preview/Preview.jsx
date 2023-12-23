@@ -1,8 +1,10 @@
+import 'material-symbols';
 import { generateClampedFontSize } from '@/helpers/scales';
-import scalesPreview from '../styles/scalesPreview.module.css';
-import Heading from './Heading';
+import preview from './preview.module.css';
+import Heading from '../Heading';
+import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
 
-export default function ScalesPreview({
+export default function Preview({
   lowerScale,
   upperScale,
   scalingType,
@@ -46,9 +48,11 @@ export default function ScalesPreview({
   ];
 
   return (
-    <section className={scalesPreview.preview}>
-      <h2>Preview</h2>
-      <div className={scalesPreview.preview_content}>
+    <section id="preview" className={preview.preview}>
+      <h2 className={preview.preview_title}>
+        <span className="word_highlight">Preview</span>
+      </h2>
+      <div className={preview.preview_content}>
         {headings.map(({ tag, step, style }) => {
           const font_size = generateClampedFontSize(
             lowerScale,
@@ -59,15 +63,11 @@ export default function ScalesPreview({
           return (
             <div
               key={`heading-${step}`}
-              className={scalesPreview.preview_heading_wrap}
+              className={preview.preview_heading_wrap}
             >
-              <div className={scalesPreview.preview_heading_code}>
-                <code>{tag}</code>
-                <code>font-size: {font_size};</code>
-                <button>Copy</button>
-              </div>
+              <FontSizeCopyLine tag={tag} font_size={font_size} />
               <Heading
-                className={scalesPreview.preview_heading}
+                className={preview.preview_heading}
                 tag={tag}
                 style={{
                   fontSize: font_size,

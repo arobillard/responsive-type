@@ -1,4 +1,4 @@
-import controls from '../styles/controls.module.css';
+import controls from './controls.module.css';
 
 export default function Controls({
   scalingType,
@@ -24,7 +24,7 @@ export default function Controls({
   ];
 
   return (
-    <section className={controls.controls}>
+    <section id="controls" className={controls.controls}>
       <h2 className={controls.controls_heading}>Controls</h2>
 
       <div className={controls.grid_unit}>

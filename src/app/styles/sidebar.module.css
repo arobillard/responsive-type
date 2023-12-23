@@ -1,0 +1,8 @@
+.sidebar {
+  padding: var(--spacer-base);
+  background-color: var(--color-primary);
+}
+
+.sidebar_title {
+  /* text-shadow: 0.0625em 0.0625em 0 var(--color-primary); */
+}
