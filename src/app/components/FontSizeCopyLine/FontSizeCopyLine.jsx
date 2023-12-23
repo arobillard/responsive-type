@@ -19,8 +19,6 @@ export default function FontSizeCopyLine({ tag, font_size }) {
 
   return (
     <div className={fontSizeCopyLine.fontSizeCopyLine}>
-      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>{tag}</code>
-      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>{cssCode}</code>
       <button
         className={`${fontSizeCopyLine.fontSizeCopyLine_copy}${
           hasBeenCopied ? ` ${fontSizeCopyLine.fontSizeCopyLine_copied}` : ''
@@ -35,6 +33,8 @@ export default function FontSizeCopyLine({ tag, font_size }) {
         </i>
         <ScreenReaderText>Copy {tag} font-size CSS code</ScreenReaderText>
       </button>
+      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>{tag}</code>
+      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>{cssCode}</code>
     </div>
   );
 }

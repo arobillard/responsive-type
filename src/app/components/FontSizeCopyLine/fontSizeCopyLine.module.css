@@ -1,5 +1,6 @@
 .fontSizeCopyLine {
   margin-block-end: var(--spacer-xs);
+  display: flex;
 }
 
 .fontSizeCopyLine_code {
@@ -8,6 +9,7 @@
   background-color: var(--color-secondary);
   border: 0.0625rem solid var(--color-primary);
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .fontSizeCopyLine_code:has(+ code, + button) {
@@ -15,6 +17,7 @@
   border-end-end-radius: 0;
 }
 
+.fontSizeCopyLine_copy + .fontSizeCopyLine_code,
 .fontSizeCopyLine_code + .fontSizeCopyLine_code {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
@@ -25,10 +28,11 @@
   padding: var(--spacer-xs) var(--spacer-s);
   background-color: var(--color-secondary);
   border: 0.0625rem solid var(--color-primary);
-  border-radius: 0 var(--radius-small) var(--radius-small) 0;
-  border-inline-start: 0;
+  border-radius: var(--radius-small) 0 0 var(--radius-small);
   display: inline-flex;
+  align-items: center;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .fontSizeCopyLine_copy:where(:hover, :focus-visible) {
