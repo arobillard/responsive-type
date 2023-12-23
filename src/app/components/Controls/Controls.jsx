@@ -70,7 +70,7 @@ export default function Controls({
         </select>
       </div>
 
-      <h3 class={controls.controls_heading}>Content</h3>
+      <h3 className={controls.controls_heading}>Content</h3>
       <div className={controls.grid_unit}>
         <label htmlFor="sentence">Heading</label>
         <input
