@@ -1,0 +1,59 @@
+.switch input {
+  appearance: none;
+  position: absolute;
+}
+
+.switch input:focus {
+  outline: 0;
+}
+
+.switch_label {
+  display: flex;
+  gap: var(--spacer-base);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.switch_label:has(+ input:focus-visible) {
+  outline: 0.125rem solid var(--color-accent-bright);
+}
+
+.switch_wrap {
+  width: 2.5rem;
+  height: 1rem;
+  display: inline-flex;
+  position: relative;
+}
+
+.switch_bar {
+  background-color: #ccc;
+  border-radius: 3rem;
+  /* border: 0.125rem solid var(--color-primary-dark); */
+  box-shadow: 0.125rem 0.125rem 0 var(--color-primary-dark);
+  display: inline-block;
+  width: 100%;
+  transition: background-color var(--transition);
+}
+
+.switch_toggle {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  /* border: 0.125rem solid var(--color-primary-dark); */
+  box-shadow: 0.125rem 0.125rem 0 var(--color-primary-dark);
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  translate: 0 -50%;
+  transition: translate var(--transition), inset var(--transition);
+}
+
+.switch_checked .switch_bar {
+  background-color: var(--color-success);
+}
+
+.switch_checked .switch_toggle {
+  inset-inline-start: 100%;
+  translate: -100% -50%;
+}

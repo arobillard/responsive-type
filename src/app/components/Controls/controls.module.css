@@ -6,3 +6,17 @@
 .controls_heading {
   margin: 0;
 }
+
+.mediaQuery_item {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacer-m);
+  padding-block-end: var(--spacer-m);
+  border-block-end: 0.125rem solid var(--color-primary-dark);
+  /* margin-block-end: var(--spacer-m); */
+}
+
+.mediaQuery_span {
+  grid-column: 1 / -1;
+  margin: 0;
+}

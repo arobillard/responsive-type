@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import 'material-symbols';
 import controls from './controls.module.css';
+import Switch from '../inputs/Switch/Switch';
+import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
 
 const scaleOptions = [
   { value: 1.067, label: 'Minor Second' },
@@ -13,6 +16,8 @@ const scaleOptions = [
 ];
 
 export default function Controls({
+  usingMediaQueries,
+  setUsingMediaQueries,
   scalingType,
   setScalingType,
   lowerScale,
@@ -21,6 +26,8 @@ export default function Controls({
   setUpperScale,
   sentence,
   setSentence,
+  mediaQueries,
+  setMediaQueries,
   paragraph,
   setParagraph,
 }) {
@@ -57,48 +64,108 @@ export default function Controls({
     <section id="controls" className={controls.controls}>
       <h2 className={controls.controls_heading}>Controls</h2>
 
-      <div className={controls.grid_unit}>
-        <label htmlFor="scaling-type">Scaling Type</label>
-        <select
-          name="scaling-type"
-          id="scaling-type"
-          onChange={(e) => setScalingType(e.target.value)}
-          value={scalingType}
-        >
-          <option value="cqi">cqi</option>
-          <option value="vw">vw</option>
-        </select>
-      </div>
-      <div className={controls.grid_unit}>
-        <label htmlFor="lower-scale">Lower Scale</label>
-        <select
-          name="lower-scale"
-          id="lower-scale"
-          onChange={(e) => updateLowerScale(e.target.value)}
-          value={lowerScale}
-        >
-          {lowerScaleOptions.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {value} – {label}
-            </option>
+      <Switch
+        name="usingMediaQueries"
+        label="Use @media"
+        onChange={() => setUsingMediaQueries(!usingMediaQueries)}
+        checked={usingMediaQueries}
+      />
+
+      {usingMediaQueries ? (
+        <>
+          <h3 className={controls.controls_heading}>Media Queries</h3>
+          {mediaQueries.map(({ label, minWidth, scale }, i) => (
+            <div className={controls.mediaQuery_item} key={`${label}-${scale}`}>
+              <label htmlFor={`label-${i}`} className="srt">
+                MQ Label
+              </label>
+              <input
+                type="text"
+                id={`label-${i}`}
+                name={`label-${i}`}
+                value={label}
+              />
+
+              <label htmlFor={`min-width-${i}`} className="srt">
+                min-width
+              </label>
+              <input
+                type="text"
+                id={`min-width-${i}`}
+                name={`min-width-${i}`}
+                value={minWidth}
+              />
+
+              <label htmlFor={`scale-${i}`} className="srt">
+                {label} Scale
+              </label>
+              <select
+                name={`scale-${i}`}
+                id={`scale-${i}`}
+                value={scale}
+                className={controls.mediaQuery_span}
+              >
+                {scaleOptions.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {value} – {label}
+                  </option>
+                ))}
+              </select>
+            </div>
           ))}
-        </select>
-      </div>
-      <div className={controls.grid_unit}>
-        <label htmlFor="upper-scale">Upper Scale</label>
-        <select
-          name="upper-scale"
-          id="upper-scale"
-          onChange={(e) => updateUpperScale(e.target.value)}
-          value={upperScale}
-        >
-          {upperScaleOptions.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {value} – {label}
-            </option>
-          ))}
-        </select>
-      </div>
+          <button>
+            <i className="material-symbols-outlined" aria-hidden="true">
+              add_circle
+            </i>
+            <ScreenReaderText>Add scale</ScreenReaderText>
+          </button>
+        </>
+      ) : (
+        <>
+          <div className={controls.grid_unit}>
+            <label htmlFor="scaling-type">Scaling Type</label>
+            <select
+              name="scaling-type"
+              id="scaling-type"
+              onChange={(e) => setScalingType(e.target.value)}
+              value={scalingType}
+            >
+              <option value="cqi">cqi</option>
+              <option value="vw">vw</option>
+            </select>
+          </div>
+          <div className={controls.grid_unit}>
+            <label htmlFor="lower-scale">Lower Scale</label>
+            <select
+              name="lower-scale"
+              id="lower-scale"
+              onChange={(e) => updateLowerScale(e.target.value)}
+              value={lowerScale}
+            >
+              {lowerScaleOptions.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {value} – {label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={controls.grid_unit}>
+            <label htmlFor="upper-scale">Upper Scale</label>
+            <select
+              name="upper-scale"
+              id="upper-scale"
+              onChange={(e) => updateUpperScale(e.target.value)}
+              value={upperScale}
+            >
+              {upperScaleOptions.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {value} – {label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </>
+      )}
 
       <h3 className={controls.controls_heading}>Content</h3>
       <div className={controls.grid_unit}>

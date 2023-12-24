@@ -98,6 +98,12 @@ button {
   transition: background-color var(--transition), color var(--transition);
 }
 
+.srt {
+  position: absolute;
+  white-space: nowrap;
+  clip-path: polygon(0 0, 0.1% 0, 0.1% 0.1%, 0 0.1%);
+}
+
 input:where(:not([type='checkbox'], [type='radio'])),
 select,
 textarea {
@@ -112,6 +118,10 @@ textarea {
   & + label {
     margin-block-start: var(--spacer-xs);
   }
+}
+
+label {
+  cursor: pointer;
 }
 
 label:where(
