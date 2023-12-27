@@ -5,7 +5,7 @@
 
 .fontSizeCopyLine_code {
   padding: var(--spacer-xs) var(--spacer-s);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-s);
   background-color: var(--color-secondary);
   border: 0.0625rem solid var(--color-primary);
   vertical-align: middle;
@@ -28,7 +28,7 @@
   padding: var(--spacer-xs) var(--spacer-s);
   background-color: var(--color-secondary);
   border: 0.0625rem solid var(--color-primary);
-  border-radius: var(--radius-small) 0 0 var(--radius-small);
+  border-radius: var(--radius-s) 0 0 var(--radius-s);
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
@@ -37,12 +37,14 @@
 
 .fontSizeCopyLine_copy:where(:hover, :focus-visible) {
   background-color: var(--color-primary);
+  cursor: copy;
   /* color: var(--color-primary-dark); */
 }
 
 .fontSizeCopyLine_copied,
 .fontSizeCopyLine_copied:where(:hover, :focus-visible) {
   background-color: var(--color-success);
+  cursor: unset;
 }
 
 .fontSizeCopyLine_icon {

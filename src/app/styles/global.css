@@ -9,12 +9,19 @@
   --container: 65em;
   --container-narrow: 35em;
 
-  --spacer-base: 1.5rem;
-  --spacer-xs: calc(var(--spacer-base) / 6);
-  --spacer-s: calc(var(--spacer-base) / 3);
-  --spacer-m: calc(var(--spacer-base) / 2);
-  --spacer-l: calc(var(--spacer-base) * 2);
-  --spacer-xl: calc(var(--spacer-base) * 3);
+  --spacer: 1.5;
+  --spacer-xs: calc(var(--spacer) * 1rem / 6);
+  --spacer-s: calc(var(--spacer) * 1rem / 3);
+  --spacer-m: calc(var(--spacer) * 1rem / 2);
+  --spacer-base: calc(var(--spacer) * 1rem);
+  --spacer-l: calc(var(--spacer) * 1rem * 2);
+  --spacer-xl: calc(var(--spacer) * 1rem * 3);
+  --spacer-em-xs: calc(var(--spacer) * 1em / 6);
+  --spacer-em-s: calc(var(--spacer) * 1em / 3);
+  --spacer-em-m: calc(var(--spacer) * 1em / 2);
+  --spacer-em-base: calc(var(--spacer) * 1em);
+  --spacer-em-l: calc(var(--spacer) * 1em * 2);
+  --spacer-em-xl: calc(var(--spacer) * 1em * 3);
 
   --type-small: 0.875rem;
   --type-step-1: clamp(1.125rem, 2.325cqi, 1.2rem);
@@ -24,9 +31,9 @@
   --type-step-5: clamp(1.802rem, 4.29cqi, 2.488rem);
   --type-step-6: clamp(2.027rem, 5.013cqi, 2.986rem);
 
-  --radius: calc(var(--spacer-base) / 3);
-  --radius-small: calc(var(--radius) / 2);
-  --radius-large: calc(var(--radius) * 2);
+  --radius: calc(var(--spacer) * 1em / 3);
+  --radius-s: calc(var(--radius) / 2);
+  --radius-l: calc(var(--radius) * 2);
 
   --transition: 0.2s;
 }
@@ -117,6 +124,11 @@ textarea {
 
   & + label {
     margin-block-start: var(--spacer-xs);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
