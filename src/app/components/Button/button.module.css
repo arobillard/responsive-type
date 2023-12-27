@@ -1,0 +1,48 @@
+.button {
+  --btn-bg-color: var(--color-primary);
+  --btn-text-color: var(#222);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacer-em-s);
+  text-align: center;
+  padding: var(--spacer-em-s) var(--spacer-em-base);
+  font: inherit;
+  background-color: var(--btn-bg-color);
+  border: 0.125rem solid var(--btn-bg-color);
+  color: var(--btn-text-color);
+  border-radius: var(--radius-s);
+  box-shadow: 0.125em 0.125em 0 var(--color-primary-dark);
+  transition: background-color var(--transition), border-color var(--transition),
+    color var(--transition);
+}
+
+.button:where(:hover, :focus) {
+  --btn-bg-color: var(--color-primary-dark);
+  --btn-text-color: var(--color-secondary);
+}
+
+.button_outline {
+  background-color: transparent;
+  --btn-text-color: var(--color-primary-dark);
+  box-shadow: none;
+}
+
+.button_outline:where(:hover, :focus) {
+  background-color: var(--btn-bg-color);
+  --btn-text-color: var(--color-secondary);
+}
+
+.button_secondary {
+  --btn-bg-color: var(--color-secondary);
+  --btn-text-color: var(--color-primary-dark);
+}
+
+/* .button_secondary.button_outline {
+  --btn-text-color: var(--color-primary-dark);
+} */
+
+.button_secondary:where(:hover, :focus) {
+  --btn-bg-color: var(--color-accent);
+  --btn-text-color: var(--color-secondary);
+}
