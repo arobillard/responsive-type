@@ -3,6 +3,7 @@ import 'material-symbols';
 import controls from './controls.module.css';
 import Switch from '../inputs/Switch/Switch';
 import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
+import Button from '../Button/Button';
 
 const scaleOptions = [
   { value: 1.067, label: 'Minor Second' },
@@ -94,6 +95,7 @@ export default function Controls({
                 id={`min-width-${i}`}
                 name={`min-width-${i}`}
                 value={minWidth}
+                disabled={i === 0}
               />
 
               <label htmlFor={`scale-${i}`} className="srt">
@@ -113,12 +115,12 @@ export default function Controls({
               </select>
             </div>
           ))}
-          <button>
+          <Button secondary outline>
             <i className="material-symbols-outlined" aria-hidden="true">
               add_circle
             </i>
             <ScreenReaderText>Add scale</ScreenReaderText>
-          </button>
+          </Button>
         </>
       ) : (
         <>
