@@ -5,6 +5,7 @@ import layout from './styles/layout.module.css';
 import sidebar from './styles/sidebar.module.css';
 import Controls from './components/Controls/Controls';
 import Preview from './components/Preview/Preview';
+import { defaultMediaQueries, getDefaultMediaQueries } from '@/helpers/scales';
 
 export default function Home() {
   const [usingMediaQueries, setUsingMediaQueries] = useState(() => {
@@ -34,31 +35,15 @@ export default function Home() {
   });
 
   const [mediaQueries, setMediaQueries] = useState(() => {
-    const defaultMediaQueries = [
-      {
-        label: 'xs',
-        minWidth: null,
-        scale: 1.125,
-      },
-      {
-        label: 'm',
-        minWidth: '45em',
-        scale: 1.25,
-      },
-      {
-        label: 'l',
-        minWidth: '60em',
-        scale: 1.333,
-      },
-    ];
+    // const mqs = [...defaultMediaQueries.slice(0, 3)];
+    const mqs = getDefaultMediaQueries();
+
+    console.log(mqs);
 
     if (window) {
-      return (
-        JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
-        defaultMediaQueries
-      );
+      return JSON.parse(localStorage.getItem('rt-mediaQueries')) || mqs;
     }
-    return defaultMediaQueries;
+    return mqs;
   });
 
   const [sentence, setSentence] = useState(

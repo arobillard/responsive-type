@@ -9,7 +9,7 @@
 
 .mediaQuery_item {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 4fr 1fr;
   gap: var(--spacer-m);
   padding-block-end: var(--spacer-m);
   border-block-end: 0.125rem solid var(--color-primary-dark);
@@ -17,6 +17,11 @@
 }
 
 .mediaQuery_span {
+  grid-column: span 2;
+  margin: 0;
+}
+
+.mediaQuery_fullSpan {
   grid-column: 1 / -1;
   margin: 0;
 }

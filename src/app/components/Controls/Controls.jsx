@@ -4,17 +4,7 @@ import controls from './controls.module.css';
 import Switch from '../inputs/Switch/Switch';
 import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
 import Button from '../Button/Button';
-
-const scaleOptions = [
-  { value: 1.067, label: 'Minor Second' },
-  { value: 1.125, label: 'Major Second' },
-  { value: 1.2, label: 'Minor Third' },
-  { value: 1.25, label: 'Major Third' },
-  { value: 1.333, label: 'Perfect Fourth' },
-  { value: 1.414, label: 'Augmented Fourth' },
-  { value: 1.5, label: 'Perfect Fifth' },
-  { value: 1.618, label: 'Golden Ratio' },
-];
+import { defaultMediaQueries, defaultScaleOptions } from '@/helpers/scales';
 
 export default function Controls({
   usingMediaQueries,
@@ -33,32 +23,74 @@ export default function Controls({
   setParagraph,
 }) {
   const [lowerScaleOptions, setLowerScaleOptions] = useState([
-    ...scaleOptions.slice(0, 3),
+    ...defaultScaleOptions.slice(0, 3),
   ]);
   const [upperScaleOptions, setUpperScaleOptions] = useState([
-    ...scaleOptions.slice(4, scaleOptions.length),
+    ...defaultScaleOptions.slice(4, defaultScaleOptions.length),
   ]);
 
   function updateLowerScale(value) {
     setLowerScale(value);
 
-    const scaleIndex = scaleOptions.findIndex((option) => {
+    const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(value);
     });
 
     setUpperScaleOptions([
-      ...scaleOptions.slice(scaleIndex + 1, scaleOptions.length),
+      ...defaultScaleOptions.slice(scaleIndex + 1, defaultScaleOptions.length),
     ]);
   }
 
   function updateUpperScale(value) {
     setUpperScale(value);
 
-    const scaleIndex = scaleOptions.findIndex((option) => {
+    const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(value);
     });
 
-    setLowerScaleOptions([...scaleOptions.slice(0, scaleIndex)]);
+    setLowerScaleOptions([...defaultScaleOptions.slice(0, scaleIndex)]);
+  }
+
+  function addMediaQuery() {
+    const largestMediaQuery = mediaQueries[mediaQueries.length - 1];
+
+    const newMediaQuery = {
+      label:
+        defaultMediaQueries.labels[
+          defaultMediaQueries.labels.indexOf(largestMediaQuery.label) + 1
+        ],
+      minWidth:
+        defaultMediaQueries.minWidths[
+          defaultMediaQueries.minWidths.indexOf(largestMediaQuery.minWidth) + 1
+        ],
+      scale:
+        defaultMediaQueries.scales[
+          defaultMediaQueries.scales.indexOf(largestMediaQuery.scale) + 1
+        ],
+    };
+
+    setMediaQueries([...mediaQueries, newMediaQuery]);
+  }
+
+  function updateMediaQuery(index, prop, value) {
+    console.log(index, prop, value);
+
+    const updatedMediaQuery = { ...mediaQueries[index] };
+
+    updatedMediaQuery[prop] = value;
+
+    setMediaQueries([
+      ...mediaQueries.slice(0, index),
+      updatedMediaQuery,
+      ...mediaQueries.slice(index + 1),
+    ]);
+  }
+
+  function removeMediaQuery(index) {
+    setMediaQueries([
+      ...mediaQueries.slice(0, index),
+      ...mediaQueries.slice(index + 1),
+    ]);
   }
 
   return (
@@ -85,6 +117,7 @@ export default function Controls({
                 id={`label-${i}`}
                 name={`label-${i}`}
                 value={label}
+                onChange={(e) => updateMediaQuery(i, 'label', e.target.value)}
               />
 
               <label htmlFor={`min-width-${i}`} className="srt">
@@ -96,6 +129,10 @@ export default function Controls({
                 name={`min-width-${i}`}
                 value={minWidth}
                 disabled={i === 0}
+                className={controls.mediaQuery_span}
+                onChange={(e) =>
+                  updateMediaQuery(i, 'minWidth', e.target.value)
+                }
               />
 
               <label htmlFor={`scale-${i}`} className="srt">
@@ -104,22 +141,39 @@ export default function Controls({
               <select
                 name={`scale-${i}`}
                 id={`scale-${i}`}
-                value={scale}
-                className={controls.mediaQuery_span}
+                value={scale.value}
+                onChange={(e) => updateMediaQuery(i, 'scale', e.target.value)}
+                className={
+                  i === 0
+                    ? controls.mediaQuery_fullSpan
+                    : controls.mediaQuery_span
+                }
               >
-                {scaleOptions.map(({ value, label }) => (
+                {defaultScaleOptions.map(({ value, label }) => (
                   <option key={value} value={value}>
                     {value} – {label}
                   </option>
                 ))}
               </select>
+              {i !== 0 && (
+                <Button
+                  onClick={() => removeMediaQuery(i)}
+                  secondary
+                  outline
+                  paddingSubtle
+                >
+                  <i className="material-symbols-outlined" aria-hidden="true">
+                    delete
+                  </i>
+                </Button>
+              )}
             </div>
           ))}
-          <Button secondary outline>
+          <Button onClick={addMediaQuery} secondary outline>
             <i className="material-symbols-outlined" aria-hidden="true">
               add_circle
             </i>
-            <ScreenReaderText>Add scale</ScreenReaderText>
+            <ScreenReaderText>Add media query</ScreenReaderText>
           </Button>
         </>
       ) : (
