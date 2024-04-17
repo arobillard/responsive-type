@@ -9,13 +9,13 @@ export const defaultScaleOptions = [
   { value: 1.618, label: 'Golden Ratio' },
 ];
 
-function getScaleByValue(value) {
-  return defaultScaleOptions.filter(opt);
+export function getScaleByValue(value) {
+  return defaultScaleOptions.filter((opt) => opt.value == value)[0];
 }
 
 export const defaultMediaQueries = {
   labels: ['s', 'm', 'l', 'xl', 'xxl'],
-  minWidths: [null, '45em', '60em', '90em', '120em'],
+  minWidths: ['', '45em', '60em', '90em', '120em'],
   scales: [
     defaultScaleOptions[1],
     defaultScaleOptions[2],
@@ -27,8 +27,6 @@ export const defaultMediaQueries = {
 
 export function getDefaultMediaQueries() {
   const mqs = [];
-
-  console.log(defaultMediaQueries);
 
   for (let i = 0; i < 3; i++) {
     mqs.push({
@@ -65,9 +63,16 @@ export function generateClampedFontSize(
   const lower_value = generateFontSizeByScale(lower_scale, step, false);
   const upper_value = generateFontSizeByScale(upper_scale, step, false);
 
-  // TODO: This can be simplified. The / 2 / 50 is undone by the * 100
+  // TODO:  This can be simplified. The / 2 / 50 is undone by the * 100
+  // NOTE:  leaving this in, as possible the 50 (based on a 50rem width screen)
+  //        may be something to be made customizable
+
+  const screen_base_size = 50; // based on 50rem width screen
+
   const scaling_value =
-    Math.round(((lower_value + upper_value) / 2 / 50) * 100 * 1000) / 1000;
+    Math.round(
+      ((lower_value + upper_value) / 2 / screen_base_size) * 100 * 1000
+    ) / 1000;
 
   return `clamp(${lower_value}rem, ${scaling_value}${scalingType}, ${upper_value}rem)`;
 }

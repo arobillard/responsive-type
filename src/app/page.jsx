@@ -35,10 +35,7 @@ export default function Home() {
   });
 
   const [mediaQueries, setMediaQueries] = useState(() => {
-    // const mqs = [...defaultMediaQueries.slice(0, 3)];
     const mqs = getDefaultMediaQueries();
-
-    console.log(mqs);
 
     if (window) {
       return JSON.parse(localStorage.getItem('rt-mediaQueries')) || mqs;
