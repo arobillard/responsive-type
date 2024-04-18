@@ -76,3 +76,39 @@ export function generateClampedFontSize(
 
   return `clamp(${lower_value}rem, ${scaling_value}${scalingType}, ${upper_value}rem)`;
 }
+
+export const defaultHeadings = [
+  {
+    tag: 'h1',
+    step: 6,
+    style: {
+      lineHeight: 1.1,
+    },
+  },
+  {
+    tag: 'h2',
+    step: 5,
+    style: {
+      lineHeight: 1.2,
+    },
+  },
+  {
+    tag: 'h3',
+    step: 4,
+    style: {
+      lineHeight: 1.3,
+    },
+  },
+  {
+    tag: 'h4',
+    step: 3,
+  },
+  {
+    tag: 'h5',
+    step: 2,
+  },
+  {
+    tag: 'h6',
+    step: 1,
+  },
+];

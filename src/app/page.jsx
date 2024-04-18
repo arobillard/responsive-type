@@ -6,6 +6,7 @@ import sidebar from './styles/sidebar.module.css';
 import Controls from './components/Controls/Controls';
 import Preview from './components/Preview/Preview';
 import { defaultMediaQueries, getDefaultMediaQueries } from '@/helpers/scales';
+import CodeBox from './components/CodeBox/CodeBox';
 
 export default function Home() {
   const [usingMediaQueries, setUsingMediaQueries] = useState(() => {
@@ -97,11 +98,19 @@ export default function Home() {
       </div>
 
       <Preview
+        usingMediaQueries={usingMediaQueries}
         scalingType={scalingType}
         lowerScale={lowerScale}
         upperScale={upperScale}
         sentence={sentence}
         paragraph={paragraph}
+      />
+
+      <CodeBox
+        usingMediaQueries={usingMediaQueries}
+        scalingType={scalingType}
+        lowerScale={lowerScale}
+        upperScale={upperScale}
       />
     </main>
   );

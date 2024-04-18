@@ -1,0 +1,4 @@
+.codeBox {
+  padding: var(--spacer-base);
+  background-color: var(--color-primary-pale);
+}
