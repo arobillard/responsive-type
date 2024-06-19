@@ -123,7 +123,7 @@ export default function MediaQueryControls({ mediaQueries, setMediaQueries }) {
         );
       })}
       {mediaQueries.length < 8 && (
-        <Button onClick={addMediaQuery} secondary outline>
+        <Button onClick={addMediaQuery} secondary hoverSuccess outline>
           <i className="material-symbols-outlined" aria-hidden="true">
             add_circle
           </i>

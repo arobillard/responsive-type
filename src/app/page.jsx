@@ -5,7 +5,7 @@ import layout from './styles/layout.module.css';
 import sidebar from './styles/sidebar.module.css';
 import Controls from './components/Controls/Controls';
 import Preview from './components/Preview/Preview';
-import { getDefaultMediaQueries } from '@/helpers/scales';
+import { getInitialMediaQueries } from '@/helpers/scales';
 import CodeBox from './components/CodeBox/CodeBox';
 
 const default_headingText =
@@ -42,9 +42,12 @@ export default function Home() {
 
   const [mediaQueries, setMediaQueries] = useState(() => {
     if (window) {
-      return JSON.parse(localStorage.getItem('rt-mediaQueries')) || mqs;
+      return (
+        JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
+        getInitialMediaQueries()
+      );
     }
-    return getDefaultMediaQueries();
+    return getInitialMediaQueries();
   });
 
   const [headingText, setHeadingText] = useState(() => {

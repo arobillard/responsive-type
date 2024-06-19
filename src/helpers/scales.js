@@ -25,7 +25,7 @@ export const defaultMediaQueries = {
   ],
 };
 
-export function getDefaultMediaQueries() {
+export function getInitialMediaQueries() {
   const mqs = [];
 
   for (let i = 0; i < 3; i++) {
