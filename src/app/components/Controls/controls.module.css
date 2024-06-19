@@ -25,3 +25,9 @@
   grid-column: 1 / -1;
   margin: 0;
 }
+
+.label_subtle {
+  text-transform: none;
+  font-size: 0.875rem;
+  font-weight: normal;
+}

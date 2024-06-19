@@ -1,4 +1,23 @@
 .codeBox {
   padding: var(--spacer-base);
   background-color: var(--color-primary-pale);
+  width: 100vw;
+}
+
+.pre {
+  width: 100vw;
+  overflow-x: scroll;
+  display: block;
+  padding-inline: var(--spacer-base);
+  margin-inline: calc(-1 * var(--spacer-base));
+}
+
+@media only screen and (min-width: 45em) {
+  .codeBox {
+    width: 100%;
+  }
+
+  .pre {
+    width: 100%;
+  }
 }

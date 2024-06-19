@@ -50,7 +50,7 @@ ${heading.tag} {
         </i>
         Copy Code
       </Button>
-      <pre>
+      <pre className={codeBox.pre}>
         <code>{outputCode}</code>
       </pre>
     </section>

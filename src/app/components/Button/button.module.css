@@ -47,6 +47,11 @@
   --btn-text-color: var(--color-secondary);
 }
 
+.button_hoverSuccess:where(:hover, :focus) {
+  --btn-bg-color: var(--color-success);
+  --btn-text-color: var(--color-secondary);
+}
+
 .button_paddingSubtle {
   padding: var(--spacer-em-s);
 }

@@ -10,6 +10,13 @@ export default function Footer() {
           <a className={footer.footer_link} href="https://adamrobillard.ca">
             Adam Robillard
           </a>
+          . View code on{' '}
+          <a
+            href="https://github.com/arobillard/responsive-type"
+            target="_blank"
+          >
+            GitHub
+          </a>
         </small>
       </div>
     </footer>
