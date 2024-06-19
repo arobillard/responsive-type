@@ -8,8 +8,8 @@ export default function Preview({
   lowerScale,
   upperScale,
   scalingType,
-  sentence,
-  paragraph,
+  headingText,
+  paragraphText,
 }) {
   return (
     <section id="preview" className={preview.preview}>
@@ -39,12 +39,12 @@ export default function Preview({
                   ...style,
                 }}
               >
-                {sentence}
+                {headingText}
               </Heading>
             </div>
           );
         })}
-        <p>{paragraph}</p>
+        <p>{paragraphText}</p>
       </div>
     </section>
   );
