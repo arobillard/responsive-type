@@ -16,6 +16,8 @@
   /* margin-block-end: var(--spacer-m); */
 }
 
+/* .mediaQuery_span2 */
+
 .mediaQuery_span {
   grid-column: span 2;
   margin: 0;

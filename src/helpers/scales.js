@@ -10,7 +10,7 @@ export const defaultScaleOptions = [
 ];
 
 export function getScaleByValue(value) {
-  return defaultScaleOptions.filter((opt) => opt.value == value)[0];
+  return { ...defaultScaleOptions.find((opt) => opt.value == value) };
 }
 
 export const defaultMediaQueries = {
@@ -33,6 +33,7 @@ export function getInitialMediaQueries() {
       label: defaultMediaQueries.labels[i],
       minWidth: defaultMediaQueries.minWidths[i],
       scale: defaultMediaQueries.scales[i],
+      id: i,
     });
   }
 

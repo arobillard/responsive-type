@@ -7,6 +7,7 @@ import Controls from './components/Controls/Controls';
 import Preview from './components/Preview/Preview';
 import { getInitialMediaQueries } from '@/helpers/scales';
 import CodeBox from './components/CodeBox/CodeBox';
+import Button from './components/Button/Button';
 
 const default_headingText =
   'Life before death, strength before weakness, journey before destination.';
@@ -93,6 +94,12 @@ export default function Home() {
     setParagraphText(default_paragraphText);
   }
 
+  function resetScaleValues() {
+    setLowerScale(1.125);
+    setUpperScale(1.333);
+    setMediaQueries(getInitialMediaQueries());
+  }
+
   return (
     <main id="main" className={layout.layout}>
       <div className={sidebar.sidebar}>
@@ -135,6 +142,13 @@ export default function Home() {
         lowerScale={lowerScale}
         upperScale={upperScale}
       />
+
+      <Button
+        onClick={resetScaleValues}
+        style={{ position: 'fixed', inset: 'auto 1rem 1rem auto' }}
+      >
+        Reset
+      </Button>
     </main>
   );
 }

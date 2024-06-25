@@ -8,6 +8,7 @@ export default function Button({
   paddingSubtle,
   hoverSuccess,
   onClick,
+  style,
 }) {
   const class_list = [button.button];
 
@@ -17,7 +18,11 @@ export default function Button({
   if (hoverSuccess) class_list.push(button.button_hoverSuccess);
 
   return (
-    <button className={apply_classes(class_list)} onClick={onClick}>
+    <button
+      style={style}
+      className={apply_classes(class_list)}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
