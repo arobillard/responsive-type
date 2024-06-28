@@ -16,33 +16,33 @@ const default_paragraphText =
 
 export default function Home() {
   const [usingMediaQueries, setUsingMediaQueries] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return localStorage.getItem('rt-usingMediaQueries') === 'true';
     }
     return false;
   });
 
   const [scalingType, setScalingType] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return localStorage.getItem('rt-scalingType') || 'cqi';
     }
     return 'cqi';
   });
   const [lowerScale, setLowerScale] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return localStorage.getItem('rt-lowerScale') || 1.125;
     }
     return 1.125;
   });
   const [upperScale, setUpperScale] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return localStorage.getItem('rt-upperScale') || 1.333;
     }
     return 1.333;
   });
 
   const [mediaQueries, setMediaQueries] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return (
         JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
         getInitialMediaQueries()
@@ -52,13 +52,13 @@ export default function Home() {
   });
 
   const [headingText, setHeadingText] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return localStorage.getItem('rt-headingText') || default_headingText;
     }
     return default_headingText;
   });
   const [paragraphText, setParagraphText] = useState(() => {
-    if (window) {
+    if (typeof window !== 'undefined') {
       return localStorage.getItem('rt-paragraphText') || default_paragraphText;
     }
     return default_paragraphText;
@@ -141,6 +141,7 @@ export default function Home() {
         scalingType={scalingType}
         lowerScale={lowerScale}
         upperScale={upperScale}
+        mediaQueries={mediaQueries}
       />
 
       <Button

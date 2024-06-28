@@ -26,13 +26,6 @@ export default function Controls({
     <section id="controls" className={controls.controls}>
       <h2 className={controls.controls_heading}>Controls</h2>
 
-      <Switch
-        name="usingMediaQueries"
-        label="Use @media"
-        onChange={() => setUsingMediaQueries(!usingMediaQueries)}
-        checked={usingMediaQueries}
-      />
-
       {usingMediaQueries ? (
         <MediaQueryControls
           mediaQueries={mediaQueries}
@@ -48,6 +41,13 @@ export default function Controls({
           setUpperScale={setUpperScale}
         />
       )}
+
+      <Switch
+        name="usingMediaQueries"
+        label="Use @media"
+        onChange={() => setUsingMediaQueries(!usingMediaQueries)}
+        checked={usingMediaQueries}
+      />
 
       <h3 className={controls.controls_heading}>Content</h3>
       <div className={controls.grid_unit}>
