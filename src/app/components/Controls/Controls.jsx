@@ -8,19 +8,19 @@ import { useEffect, useState } from 'react';
 
 export default function Controls({
   usingMediaQueries,
-  setUsingMediaQueries,
+  updateUsingMediaQueries,
   scalingType,
-  setScalingType,
+  updateScalingType,
   lowerScale,
-  setLowerScale,
+  updateLowerScale,
   upperScale,
-  setUpperScale,
+  updateUpperScale,
   headingText,
-  setHeadingText,
+  updateHeadingText,
   mediaQueries,
-  setMediaQueries,
+  updateMediaQueries,
   paragraphText,
-  setParagraphText,
+  updateParagraphText,
   resetText,
 }) {
   const [isClient, setIsClient] = useState(false);
@@ -36,23 +36,23 @@ export default function Controls({
       <Switch
         name="usingMediaQueries"
         label="Use @media"
-        onChange={() => setUsingMediaQueries(!usingMediaQueries)}
+        onChange={() => updateUsingMediaQueries(!usingMediaQueries)}
         checked={usingMediaQueries}
       />
 
       {usingMediaQueries && isClient ? (
         <MediaQueryControls
           mediaQueries={mediaQueries}
-          setMediaQueries={setMediaQueries}
+          updateMediaQueries={updateMediaQueries}
         />
       ) : (
         <ScalingControls
           scalingType={scalingType}
-          setScalingType={setScalingType}
+          updateScalingType={updateScalingType}
           lowerScale={lowerScale}
-          setLowerScale={setLowerScale}
+          updateLowerScale={updateLowerScale}
           upperScale={upperScale}
-          setUpperScale={setUpperScale}
+          updateUpperScale={updateUpperScale}
         />
       )}
 
@@ -64,7 +64,7 @@ export default function Controls({
           id="heading-text"
           name="heading-text"
           value={headingText}
-          onChange={(e) => setHeadingText(e.target.value)}
+          onChange={(e) => updateHeadingText(e.target.value)}
         />
       </div>
       <div className={controls.grid_unit}>
@@ -73,7 +73,7 @@ export default function Controls({
           id="paragraph-text"
           name="paragraph-text"
           value={paragraphText}
-          onChange={(e) => setParagraphText(e.target.value)}
+          onChange={(e) => updateParagraphText(e.target.value)}
         />
       </div>
       <Button onClick={resetText} secondary outline>
