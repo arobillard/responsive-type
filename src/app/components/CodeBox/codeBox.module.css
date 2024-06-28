@@ -4,6 +4,11 @@
   width: 100vw;
 }
 
+.codeBox_title {
+  text-transform: uppercase;
+  font-size: var(--type-step-3);
+}
+
 .pre {
   width: 100vw;
   overflow-x: scroll;

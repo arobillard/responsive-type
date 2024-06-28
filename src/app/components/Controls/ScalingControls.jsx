@@ -93,7 +93,7 @@ export default function ScalingControls({
 
   return (
     <>
-      <h3 className={controls.controls_heading}>Scaling</h3>
+      <h3 className={controls.controls_subHeading}>Scaling</h3>
       <div className={controls.grid_unit}>
         <label htmlFor="scaling-type">Scaling Type</label>
         <select

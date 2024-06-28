@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import layout from './styles/layout.module.css';
-import sidebar from './styles/sidebar.module.css';
 import Controls from './components/Controls/Controls';
 import Preview from './components/Preview/Preview';
 import { getInitialMediaQueries } from '@/helpers/scales';
@@ -16,33 +15,33 @@ const default_paragraphText =
 
 export default function Home() {
   const [usingMediaQueries, setUsingMediaQueries] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return localStorage.getItem('rt-usingMediaQueries') === 'true';
     }
     return false;
   });
 
   const [scalingType, setScalingType] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return localStorage.getItem('rt-scalingType') || 'cqi';
     }
     return 'cqi';
   });
   const [lowerScale, setLowerScale] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return localStorage.getItem('rt-lowerScale') || 1.125;
     }
     return 1.125;
   });
   const [upperScale, setUpperScale] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return localStorage.getItem('rt-upperScale') || 1.333;
     }
     return 1.333;
   });
 
   const [mediaQueries, setMediaQueries] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return (
         JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
         getInitialMediaQueries()
@@ -52,13 +51,13 @@ export default function Home() {
   });
 
   const [headingText, setHeadingText] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return localStorage.getItem('rt-headingText') || default_headingText;
     }
     return default_headingText;
   });
   const [paragraphText, setParagraphText] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (window) {
       return localStorage.getItem('rt-paragraphText') || default_paragraphText;
     }
     return default_paragraphText;
@@ -102,8 +101,8 @@ export default function Home() {
 
   return (
     <main id="main" className={layout.layout}>
-      <div className={sidebar.sidebar}>
-        <h1 className={sidebar.sidebar_title}>
+      <div className={layout.layout_sidebar}>
+        <h1>
           <span className="word_highlight">Responsive</span>{' '}
           <span className="word_highlight">Type</span>
         </h1>
@@ -127,29 +126,31 @@ export default function Home() {
         />
       </div>
 
-      <Preview
-        usingMediaQueries={usingMediaQueries}
-        scalingType={scalingType}
-        lowerScale={lowerScale}
-        upperScale={upperScale}
-        headingText={headingText}
-        paragraphText={paragraphText}
-      />
+      <div className={layout.layout_content}>
+        <Preview
+          usingMediaQueries={usingMediaQueries}
+          scalingType={scalingType}
+          lowerScale={lowerScale}
+          upperScale={upperScale}
+          mediaQueries={mediaQueries}
+          headingText={headingText}
+          paragraphText={paragraphText}
+        />
+        <CodeBox
+          usingMediaQueries={usingMediaQueries}
+          scalingType={scalingType}
+          lowerScale={lowerScale}
+          upperScale={upperScale}
+          mediaQueries={mediaQueries}
+        />
+      </div>
 
-      <CodeBox
-        usingMediaQueries={usingMediaQueries}
-        scalingType={scalingType}
-        lowerScale={lowerScale}
-        upperScale={upperScale}
-        mediaQueries={mediaQueries}
-      />
-
-      <Button
+      {/* <Button
         onClick={resetScaleValues}
         style={{ position: 'fixed', inset: 'auto 1rem 1rem auto' }}
       >
         Reset
-      </Button>
+      </Button> */}
     </main>
   );
 }

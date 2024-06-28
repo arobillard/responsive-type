@@ -18,3 +18,22 @@
     grid-template-columns: 20rem 1fr;
   }
 }
+
+.layout_sidebar {
+  padding: var(--spacer-base);
+  background-color: var(--color-primary);
+
+  @media only screen and (min-width: 50em) {
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow-y: scroll;
+  }
+}
+
+.layout_content {
+  @media only screen and (min-width: 50em) {
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow-y: scroll;
+  }
+}

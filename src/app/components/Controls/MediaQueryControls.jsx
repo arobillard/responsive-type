@@ -9,8 +9,6 @@ import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText
 
 export default function MediaQueryControls({ mediaQueries, setMediaQueries }) {
   function addMediaQuery() {
-    console.log('adding media query');
-
     // Set scale label
     let newLabel = 'nl';
 
@@ -128,8 +126,6 @@ export default function MediaQueryControls({ mediaQueries, setMediaQueries }) {
   }
 
   function updateMediaQuery(index, prop, value) {
-    console.log('updating media query');
-
     // copy existing mediaQueries
     const updatedMediaQueries = [...mediaQueries];
 
@@ -156,8 +152,6 @@ export default function MediaQueryControls({ mediaQueries, setMediaQueries }) {
   }
 
   function removeMediaQuery(index) {
-    console.log('removing media query');
-
     setMediaQueries([
       ...mediaQueries.slice(0, index),
       ...mediaQueries.slice(index + 1),
@@ -166,7 +160,7 @@ export default function MediaQueryControls({ mediaQueries, setMediaQueries }) {
 
   return (
     <>
-      <h3 className={controls.controls_heading}>Media Queries</h3>
+      <h3 className={controls.controls_subHeading}>Media Queries</h3>
       {mediaQueries.map(({ label, minWidth, scale, id }, i) => {
         // console.log(scale);
         return (

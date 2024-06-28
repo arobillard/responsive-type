@@ -5,6 +5,13 @@
 
 .controls_heading {
   margin: 0;
+  font-size: var(--type-step-3);
+}
+
+.controls_subHeading {
+  margin: 0;
+  padding-block-start: var(--spacer-m);
+  font-size: var(--type-step-2);
 }
 
 .mediaQuery_item {

@@ -4,6 +4,7 @@ import Switch from '../inputs/Switch/Switch';
 import MediaQueryControls from './MediaQueryControls';
 import ScalingControls from './ScalingControls';
 import Button from '../Button/Button';
+import { useEffect, useState } from 'react';
 
 export default function Controls({
   usingMediaQueries,
@@ -22,11 +23,24 @@ export default function Controls({
   setParagraphText,
   resetText,
 }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <section id="controls" className={controls.controls}>
       <h2 className={controls.controls_heading}>Controls</h2>
 
-      {usingMediaQueries ? (
+      <Switch
+        name="usingMediaQueries"
+        label="Use @media"
+        onChange={() => setUsingMediaQueries(!usingMediaQueries)}
+        checked={usingMediaQueries}
+      />
+
+      {usingMediaQueries && isClient ? (
         <MediaQueryControls
           mediaQueries={mediaQueries}
           setMediaQueries={setMediaQueries}
@@ -42,14 +56,7 @@ export default function Controls({
         />
       )}
 
-      <Switch
-        name="usingMediaQueries"
-        label="Use @media"
-        onChange={() => setUsingMediaQueries(!usingMediaQueries)}
-        checked={usingMediaQueries}
-      />
-
-      <h3 className={controls.controls_heading}>Content</h3>
+      <h3 className={controls.controls_subHeading}>Content</h3>
       <div className={controls.grid_unit}>
         <label htmlFor="heading-text">Heading</label>
         <input
