@@ -7,10 +7,7 @@ import controls from './controls.module.css';
 import Button from '../Button/Button';
 import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
 
-export default function MediaQueryControls({
-  mediaQueries,
-  updateMediaQueries,
-}) {
+export default function MediaQueryControls({ mediaQueries, setMediaQueries }) {
   function addMediaQuery() {
     // Set scale label
     let newLabel = 'nl';
@@ -117,7 +114,7 @@ export default function MediaQueryControls({
       }
     }
 
-    updateMediaQueries([
+    setMediaQueries([
       ...mediaQueries,
       {
         label: newLabel,
@@ -151,11 +148,11 @@ export default function MediaQueryControls({
     }
 
     // update mediaQueries state
-    updateMediaQueries(updatedMediaQueries);
+    setMediaQueries(updatedMediaQueries);
   }
 
   function removeMediaQuery(index) {
-    updateMediaQueries([
+    setMediaQueries([
       ...mediaQueries.slice(0, index),
       ...mediaQueries.slice(index + 1),
     ]);

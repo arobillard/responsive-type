@@ -4,11 +4,11 @@ import controls from './controls.module.css';
 
 export default function ScalingControls({
   scalingType,
-  updateScalingType,
+  setScalingType,
   lowerScale,
-  updateLowerScale,
+  setLowerScale,
   upperScale,
-  updateUpperScale,
+  setUpperScale,
 }) {
   const [usingCustomLowerValue, setUsingCustomLowerValue] = useState(() => {
     // check if lowerScale value is in list of default scales
@@ -30,7 +30,7 @@ export default function ScalingControls({
   // A list of options for the lower scale value
   // that should be updated based on the upper scale value
   // to only include options smaller than upper scale
-  const [lowerScaleOptions, updateLowerScaleOptions] = useState(() => {
+  const [lowerScaleOptions, setLowerScaleOptions] = useState(() => {
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(upperScale);
     });
@@ -41,7 +41,7 @@ export default function ScalingControls({
   // A list of options for the upper scale value
   // that should be updated based on the lower scale value
   // to only include options larger than upper scale
-  const [upperScaleOptions, updateUpperScaleOptions] = useState(() => {
+  const [upperScaleOptions, setUpperScaleOptions] = useState(() => {
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(lowerScale);
     });
@@ -51,7 +51,7 @@ export default function ScalingControls({
     ];
   });
 
-  function changeLowerScale(value) {
+  function updateLowerScale(value) {
     if (value === 'custom') {
       // Custom value logic
       setUsingCustomLowerValue(true);
@@ -61,19 +61,19 @@ export default function ScalingControls({
     setUsingCustomLowerValue(false);
 
     // Update state value
-    updateLowerScale(value);
+    setLowerScale(value);
 
     // update list of options if using a default scale value
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(value);
     });
 
-    updateUpperScaleOptions([
+    setUpperScaleOptions([
       ...defaultScaleOptions.slice(scaleIndex + 1, defaultScaleOptions.length),
     ]);
   }
 
-  function changeUpperScale(value) {
+  function updateUpperScale(value) {
     if (value === 'custom') {
       // Custom value logic
       setUsingCustomUpperValue(true);
@@ -82,13 +82,13 @@ export default function ScalingControls({
 
     setUsingCustomUpperValue(false);
 
-    updateUpperScale(value);
+    setUpperScale(value);
 
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(value);
     });
 
-    updateLowerScaleOptions([...defaultScaleOptions.slice(0, scaleIndex)]);
+    setLowerScaleOptions([...defaultScaleOptions.slice(0, scaleIndex)]);
   }
 
   return (
@@ -99,7 +99,7 @@ export default function ScalingControls({
         <select
           name="scaling-type"
           id="scaling-type"
-          onChange={(e) => updateScalingType(e.target.value)}
+          onChange={(e) => setScalingType(e.target.value)}
           value={scalingType}
         >
           <option value="cqi">cqi</option>
@@ -111,7 +111,7 @@ export default function ScalingControls({
         <select
           name="lower-scale"
           id="lower-scale"
-          onChange={(e) => changeLowerScale(e.target.value)}
+          onChange={(e) => updateLowerScale(e.target.value)}
           value={usingCustomLowerValue ? 'custom' : lowerScale}
         >
           {lowerScaleOptions.map(({ value, label }) => (
@@ -137,7 +137,7 @@ export default function ScalingControls({
               id="custom-upper-value"
               name="custom-upper-value"
               value={lowerScale}
-              onChange={(e) => changeLowerScale(e.target.value)}
+              onChange={(e) => setLowerScale(e.target.value)}
             />
           </>
         )}
@@ -147,7 +147,7 @@ export default function ScalingControls({
         <select
           name="upper-scale"
           id="upper-scale"
-          onChange={(e) => changeUpperScale(e.target.value)}
+          onChange={(e) => updateUpperScale(e.target.value)}
           value={usingCustomUpperValue ? 'custom' : upperScale}
         >
           {upperScaleOptions.map(({ value, label }) => (
@@ -173,7 +173,7 @@ export default function ScalingControls({
               id="custom-upper-value"
               name="custom-upper-value"
               value={upperScale}
-              onChange={(e) => changeUpperScale(e.target.value)}
+              onChange={(e) => setUpperScale(e.target.value)}
             />
           </>
         )}
