@@ -1,18 +1,22 @@
-import { Noto_Sans, Noto_Serif } from 'next/font/google';
+import { Noto_Sans, Noto_Serif, Inter } from 'next/font/google';
 import './styles/global.css';
 import SkipLinks from './components/accessibility/SkipLinks/SkipLinks';
 import Footer from './components/Footer/Footer';
 
-const noto_sans = Noto_Sans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-primary',
   display: 'swap',
 });
 
+const noto_sans = Noto_Sans({
+  subsets: ['latin'],
+  variable: '--font-primary',
+});
+
 const noto_serif = Noto_Serif({
   subsets: ['latin'],
   variable: '--font-secondary',
-  display: 'swap',
 });
 
 export const metadata = {
