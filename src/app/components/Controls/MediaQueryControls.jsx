@@ -1,6 +1,7 @@
 import {
   defaultMediaQueries,
   defaultScaleOptions,
+  getInitialMediaQueries,
   getScaleByValue,
 } from '@/helpers/scales';
 import controls from './controls.module.css';
@@ -10,6 +11,7 @@ import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText
 export default function MediaQueryControls({
   mediaQueries,
   updateMediaQueries,
+  resetScaleValues,
 }) {
   function addMediaQuery() {
     // Set scale label
@@ -242,14 +244,36 @@ export default function MediaQueryControls({
           </div>
         );
       })}
-      {mediaQueries.length < 8 && (
-        <Button onClick={addMediaQuery} secondary hoverSuccess outline>
-          <i className="material-symbols-outlined" aria-hidden="true">
-            add_circle
-          </i>
-          <ScreenReaderText>Add media query</ScreenReaderText>
-        </Button>
-      )}
+      <div style={{ display: 'flex', gap: 'var(--spacer-m)' }}>
+        {mediaQueries.length < 8 && (
+          <Button
+            style={{ flexGrow: '1' }}
+            onClick={addMediaQuery}
+            secondary
+            hoverSuccess
+            outline
+          >
+            <i className="material-symbols-outlined" aria-hidden="true">
+              add_circle
+            </i>
+            <ScreenReaderText>Add media query</ScreenReaderText>
+          </Button>
+        )}
+        {JSON.stringify(mediaQueries) !==
+          JSON.stringify(getInitialMediaQueries()) && (
+          <Button
+            style={{ flexGrow: '1' }}
+            onClick={() => resetScaleValues('media')}
+            secondary
+            outline
+          >
+            <i className="material-symbols-outlined" aria-hidden="true">
+              undo
+            </i>
+            <ScreenReaderText>Reset Media Queries</ScreenReaderText>
+          </Button>
+        )}
+      </div>
     </>
   );
 }

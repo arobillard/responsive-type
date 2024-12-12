@@ -21,6 +21,7 @@ export default function Controls({
   updateMediaQueries,
   paragraphText,
   updateParagraphText,
+  resetScaleValues,
   resetText,
 }) {
   const [isClient, setIsClient] = useState(false);
@@ -44,6 +45,7 @@ export default function Controls({
         <MediaQueryControls
           mediaQueries={mediaQueries}
           updateMediaQueries={updateMediaQueries}
+          resetScaleValues={resetScaleValues}
         />
       ) : (
         <ScalingControls
@@ -53,6 +55,7 @@ export default function Controls({
           updateLowerScale={updateLowerScale}
           upperScale={upperScale}
           updateUpperScale={updateUpperScale}
+          resetScaleValues={resetScaleValues}
         />
       )}
 
@@ -77,6 +80,9 @@ export default function Controls({
         />
       </div>
       <Button onClick={resetText} secondary outline>
+        <i className="material-symbols-outlined" aria-hidden="true">
+          undo
+        </i>
         Reset Text
       </Button>
     </section>

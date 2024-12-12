@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { defaultScaleOptions } from '@/helpers/scales';
 import controls from './controls.module.css';
+import Button from '../Button/Button';
 
 export default function ScalingControls({
   scalingType,
@@ -9,6 +10,7 @@ export default function ScalingControls({
   updateLowerScale,
   upperScale,
   updateUpperScale,
+  resetScaleValues,
 }) {
   const [usingCustomLowerValue, setUsingCustomLowerValue] = useState(false);
   const [usingCustomUpperValue, setUsingCustomUpperValue] = useState(false);
@@ -43,9 +45,6 @@ export default function ScalingControls({
       return option.value === parseFloat(lowerScale);
     });
 
-    console.log('lowerScale', lowerScale);
-    console.log('lower', scaleIndex);
-
     setUsingCustomLowerValue(scaleIndex === -1);
   }, [lowerScale]);
 
@@ -54,9 +53,6 @@ export default function ScalingControls({
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(upperScale);
     });
-
-    console.log('upperScale', upperScale);
-    console.log('upper', scaleIndex);
 
     setUsingCustomUpperValue(scaleIndex === -1);
   }, [upperScale]);
@@ -189,6 +185,16 @@ export default function ScalingControls({
           </>
         )}
       </div>
+
+      {parseFloat(lowerScale) !== 1.125 ||
+        (parseFloat(upperScale) !== 1.333 && (
+          <Button onClick={() => resetScaleValues('scaling')} secondary outline>
+            <i className="material-symbols-outlined" aria-hidden="true">
+              undo
+            </i>
+            Reset Scales
+          </Button>
+        ))}
     </>
   );
 }

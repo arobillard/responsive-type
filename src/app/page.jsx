@@ -77,10 +77,18 @@ export default function Home() {
     updateParagraphText(default_paragraphText);
   }
 
-  function resetScaleValues() {
-    updateLowerScale(1.125);
-    updateUpperScale(1.333);
-    updateMediaQueries(getInitialMediaQueries());
+  function resetScaleValues(resetType = 'all') {
+    console.log('resetting...');
+    console.log(resetType);
+    if (resetType === 'scaling' || resetType === 'all') {
+      console.log('resetting scales');
+      updateLowerScale(1.125);
+      updateUpperScale(1.333);
+    }
+    if (resetType === 'media' || resetType === 'all') {
+      console.log('resetting media');
+      updateMediaQueries(getInitialMediaQueries());
+    }
   }
 
   return (
@@ -106,6 +114,7 @@ export default function Home() {
           updateMediaQueries={updateMediaQueries}
           paragraphText={paragraphText}
           updateParagraphText={updateParagraphText}
+          resetScaleValues={resetScaleValues}
           resetText={resetText}
         />
       </div>
@@ -128,13 +137,6 @@ export default function Home() {
           mediaQueries={mediaQueries}
         />
       </div>
-
-      <Button
-        onClick={resetScaleValues}
-        style={{ position: 'fixed', inset: 'auto 1rem 1rem auto' }}
-      >
-        Reset
-      </Button>
     </main>
   );
 }
