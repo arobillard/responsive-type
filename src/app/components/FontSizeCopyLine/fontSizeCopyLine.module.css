@@ -1,6 +1,8 @@
 .fontSizeCopyLine {
   margin-block-end: var(--spacer-xs);
   display: flex;
+  position: relative;
+  z-index: 1;
 }
 
 .fontSizeCopyLine_code {
