@@ -186,15 +186,15 @@ export default function ScalingControls({
         )}
       </div>
 
-      {parseFloat(lowerScale) !== 1.125 ||
-        (parseFloat(upperScale) !== 1.333 && (
-          <Button onClick={() => resetScaleValues('scaling')} secondary outline>
-            <i className="material-symbols-outlined" aria-hidden="true">
-              undo
-            </i>
-            Reset Scales
-          </Button>
-        ))}
+      {(parseFloat(lowerScale) !== 1.125 ||
+        parseFloat(upperScale) !== 1.333) && (
+        <Button onClick={() => resetScaleValues('scaling')} secondary outline>
+          <i className="material-symbols-outlined" aria-hidden="true">
+            undo
+          </i>
+          Reset Scales
+        </Button>
+      )}
     </>
   );
 }
