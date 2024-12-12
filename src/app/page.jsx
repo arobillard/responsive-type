@@ -16,8 +16,8 @@ const default_paragraphText =
 export default function Home() {
   const [usingMediaQueries, setUsingMediaQueries] = useState(false);
   const [scalingType, setScalingType] = useState('cqi');
-  const [lowerScale, setLowerScale] = useState(1.125);
-  const [upperScale, setUpperScale] = useState(1.333);
+  const [lowerScale, setLowerScale] = useState(null);
+  const [upperScale, setUpperScale] = useState(null);
   const [mediaQueries, setMediaQueries] = useState(getInitialMediaQueries());
   const [headingText, setHeadingText] = useState(default_headingText);
   const [paragraphText, setParagraphText] = useState(default_paragraphText);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { defaultScaleOptions } from '@/helpers/scales';
 import controls from './controls.module.css';
 
@@ -10,22 +10,8 @@ export default function ScalingControls({
   upperScale,
   updateUpperScale,
 }) {
-  const [usingCustomLowerValue, setUsingCustomLowerValue] = useState(() => {
-    // check if lowerScale value is in list of default scales
-    const scaleIndex = defaultScaleOptions.findIndex((option) => {
-      return option.value === parseFloat(lowerScale);
-    });
-
-    return scaleIndex === -1;
-  });
-  const [usingCustomUpperValue, setUsingCustomUpperValue] = useState(() => {
-    // check if upperScale value is in list of default scales
-    const scaleIndex = defaultScaleOptions.findIndex((option) => {
-      return option.value === parseFloat(upperScale);
-    });
-
-    return scaleIndex === -1;
-  });
+  const [usingCustomLowerValue, setUsingCustomLowerValue] = useState(false);
+  const [usingCustomUpperValue, setUsingCustomUpperValue] = useState(false);
 
   // A list of options for the lower scale value
   // that should be updated based on the upper scale value
@@ -51,14 +37,36 @@ export default function ScalingControls({
     ];
   });
 
+  useEffect(() => {
+    // check if lowerScale value is in list of default scales
+    const scaleIndex = defaultScaleOptions.findIndex((option) => {
+      return option.value === parseFloat(lowerScale);
+    });
+
+    console.log('lowerScale', lowerScale);
+    console.log('lower', scaleIndex);
+
+    setUsingCustomLowerValue(scaleIndex === -1);
+  }, [lowerScale]);
+
+  useEffect(() => {
+    // check if upperScale value is in list of default scales
+    const scaleIndex = defaultScaleOptions.findIndex((option) => {
+      return option.value === parseFloat(upperScale);
+    });
+
+    console.log('upperScale', upperScale);
+    console.log('upper', scaleIndex);
+
+    setUsingCustomUpperValue(scaleIndex === -1);
+  }, [upperScale]);
+
   function changeLowerScale(value) {
     if (value === 'custom') {
       // Custom value logic
       setUsingCustomLowerValue(true);
       return;
     }
-
-    setUsingCustomLowerValue(false);
 
     // Update state value
     updateLowerScale(value);
@@ -74,13 +82,12 @@ export default function ScalingControls({
   }
 
   function changeUpperScale(value) {
+    console.log('change upper scale');
     if (value === 'custom') {
       // Custom value logic
       setUsingCustomUpperValue(true);
       return;
     }
-
-    setUsingCustomUpperValue(false);
 
     updateUpperScale(value);
 
@@ -89,6 +96,10 @@ export default function ScalingControls({
     });
 
     updateLowerScaleOptions([...defaultScaleOptions.slice(0, scaleIndex)]);
+  }
+
+  if (lowerScale === null || upperScale === null) {
+    return <p>Loading...</p>;
   }
 
   return (
