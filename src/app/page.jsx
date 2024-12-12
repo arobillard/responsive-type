@@ -14,89 +14,73 @@ const default_paragraphText =
   "The Ideals of the Knights Radiant, known as the Immortal Words, serve as a guide for the Radiants' actions and lives. Each order of Radiants has five Ideals, though different Radiants from the same order may swear an ideal with slightly different words and Lightweavers swear more individualized truths instead of ideals. The wording of the First Ideal, however, is exact and is used by all orders, including the Lightweavers.";
 
 export default function Home() {
-  const [usingMediaQueries, setUsingMediaQueries] = useState(() => {
-    if (window) {
-      return localStorage.getItem('rt-usingMediaQueries') === 'true';
-    }
-    return false;
-  });
+  const [usingMediaQueries, setUsingMediaQueries] = useState(false);
+  const [scalingType, setScalingType] = useState('cqi');
+  const [lowerScale, setLowerScale] = useState(1.125);
+  const [upperScale, setUpperScale] = useState(1.333);
+  const [mediaQueries, setMediaQueries] = useState(getInitialMediaQueries());
+  const [headingText, setHeadingText] = useState(default_headingText);
+  const [paragraphText, setParagraphText] = useState(default_paragraphText);
 
-  const [scalingType, setScalingType] = useState(() => {
-    if (window) {
-      return localStorage.getItem('rt-scalingType') || 'cqi';
-    }
-    return 'cqi';
-  });
-  const [lowerScale, setLowerScale] = useState(() => {
-    if (window) {
-      return localStorage.getItem('rt-lowerScale') || 1.125;
-    }
-    return 1.125;
-  });
-  const [upperScale, setUpperScale] = useState(() => {
-    if (window) {
-      return localStorage.getItem('rt-upperScale') || 1.333;
-    }
-    return 1.333;
-  });
+  // Create functions that will both update the state value and store the value in localStorage
+  function updateUsingMediaQueries(value) {
+    setUsingMediaQueries(value);
+    localStorage.setItem('rt-usingMediaQueries', value);
+  }
+  function updateScalingType(value) {
+    setScalingType(value);
+    localStorage.setItem('rt-scalingType', value);
+  }
+  function updateLowerScale(value) {
+    setLowerScale(value);
+    localStorage.setItem('rt-lowerScale', value);
+  }
+  function updateUpperScale(value) {
+    setUpperScale(value);
+    localStorage.setItem('rt-upperScale', value);
+  }
+  function updateMediaQueries(value) {
+    setMediaQueries(value);
+    localStorage.setItem('rt-mediaQueries', JSON.stringify(value));
+  }
+  function updateHeadingText(value) {
+    setHeadingText(value);
+    localStorage.setItem('rt-headingText', value);
+  }
+  function updateParagraphText(value) {
+    setParagraphText(value);
+    localStorage.setItem('rt-paragraphText', value);
+  }
 
-  const [mediaQueries, setMediaQueries] = useState(() => {
-    if (window) {
-      return (
-        JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
+  // Get stored values from localStorage and update State
+  useEffect(() => {
+    setUsingMediaQueries(
+      localStorage.getItem('rt-usingMediaQueries') === 'true'
+    );
+    setScalingType(localStorage.getItem('rt-scalingType') || 'cqi');
+    setLowerScale(localStorage.getItem('rt-lowerScale') || 1.125);
+    setUpperScale(localStorage.getItem('rt-upperScale') || 1.333);
+    setMediaQueries(
+      JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
         getInitialMediaQueries()
-      );
-    }
-    return getInitialMediaQueries();
-  });
-
-  const [headingText, setHeadingText] = useState(() => {
-    if (window) {
-      return localStorage.getItem('rt-headingText') || default_headingText;
-    }
-    return default_headingText;
-  });
-  const [paragraphText, setParagraphText] = useState(() => {
-    if (window) {
-      return localStorage.getItem('rt-paragraphText') || default_paragraphText;
-    }
-    return default_paragraphText;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('rt-usingMediaQueries', usingMediaQueries);
-  }, [usingMediaQueries]);
-
-  useEffect(() => {
-    localStorage.setItem('rt-scalingType', scalingType);
-  }, [scalingType]);
-
-  useEffect(() => {
-    localStorage.setItem('rt-lowerScale', lowerScale);
-  }, [lowerScale]);
-
-  useEffect(() => {
-    localStorage.setItem('rt-upperScale', upperScale);
-  }, [upperScale]);
-
-  useEffect(() => {
-    localStorage.setItem('rt-mediaQueries', JSON.stringify(mediaQueries));
-  }, [mediaQueries]);
-
-  useEffect(() => {
-    localStorage.setItem('rt-headingText', headingText);
-    localStorage.setItem('rt-paragraphText', paragraphText);
-  }, [headingText, paragraphText]);
+    );
+    setHeadingText(
+      localStorage.getItem('rt-headingText') || default_headingText
+    );
+    setParagraphText(
+      localStorage.getItem('rt-paragraphText') || default_paragraphText
+    );
+  }, []);
 
   function resetText() {
-    setHeadingText(default_headingText);
-    setParagraphText(default_paragraphText);
+    updateHeadingText(default_headingText);
+    updateParagraphText(default_paragraphText);
   }
 
   function resetScaleValues() {
-    setLowerScale(1.125);
-    setUpperScale(1.333);
-    setMediaQueries(getInitialMediaQueries());
+    updateLowerScale(1.125);
+    updateUpperScale(1.333);
+    updateMediaQueries(getInitialMediaQueries());
   }
 
   return (
@@ -109,19 +93,19 @@ export default function Home() {
 
         <Controls
           usingMediaQueries={usingMediaQueries}
-          setUsingMediaQueries={setUsingMediaQueries}
+          updateUsingMediaQueries={updateUsingMediaQueries}
           scalingType={scalingType}
-          setScalingType={setScalingType}
+          updateScalingType={updateScalingType}
           lowerScale={lowerScale}
-          setLowerScale={setLowerScale}
+          updateLowerScale={updateLowerScale}
           upperScale={upperScale}
-          setUpperScale={setUpperScale}
+          updateUpperScale={updateUpperScale}
           headingText={headingText}
-          setHeadingText={setHeadingText}
+          updateHeadingText={updateHeadingText}
           mediaQueries={mediaQueries}
-          setMediaQueries={setMediaQueries}
+          updateMediaQueries={updateMediaQueries}
           paragraphText={paragraphText}
-          setParagraphText={setParagraphText}
+          updateParagraphText={updateParagraphText}
           resetText={resetText}
         />
       </div>
@@ -145,12 +129,12 @@ export default function Home() {
         />
       </div>
 
-      {/* <Button
+      <Button
         onClick={resetScaleValues}
         style={{ position: 'fixed', inset: 'auto 1rem 1rem auto' }}
       >
         Reset
-      </Button> */}
+      </Button>
     </main>
   );
 }
