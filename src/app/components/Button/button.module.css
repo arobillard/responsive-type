@@ -8,6 +8,7 @@
   text-align: center;
   padding: var(--spacer-em-s) var(--spacer-em-base);
   font: inherit;
+  text-decoration: none;
   background-color: var(--btn-bg-color);
   border: 0.125rem solid var(--btn-bg-color);
   color: var(--btn-text-color);
