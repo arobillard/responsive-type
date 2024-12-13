@@ -57,12 +57,15 @@ export default function Controls() {
           onChange={(e) => updateSettings({ paragraphText: e.target.value })}
         />
       </div>
-      <Button onClick={resetText} secondary outline>
-        <i className="material-symbols-outlined" aria-hidden="true">
-          undo
-        </i>
-        Reset Text
-      </Button>
+      {(headingText !== default_headingText ||
+        paragraphText !== default_paragraphText) && (
+        <Button onClick={resetText} secondary outline>
+          <i className="material-symbols-outlined" aria-hidden="true">
+            undo
+          </i>
+          Reset Text
+        </Button>
+      )}
     </section>
   );
 }
