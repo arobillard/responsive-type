@@ -1,0 +1,5 @@
+.not_found {
+  min-height: calc(100dvh - 3rem);
+  display: flex;
+  align-items: center;
+}
