@@ -8,8 +8,8 @@
   --color-accent-bright: #d95525;
   --color-success: #87bf73;
 
-  --container: 65em;
-  --container-narrow: 35em;
+  --container: 65rem;
+  --container-narrow: 35rem;
 
   --spacer: 1.5;
   --spacer-xs: calc(var(--spacer) * 1rem / 6);

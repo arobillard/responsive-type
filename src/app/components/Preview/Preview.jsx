@@ -8,16 +8,21 @@ import preview from './preview.module.css';
 import Heading from '../Heading';
 import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
 import { useEffect, useState } from 'react';
+import { useSettings } from '@/context/SettingsContext';
 
-export default function Preview({
-  usingMediaQueries,
-  lowerScale,
-  upperScale,
-  scalingType,
-  mediaQueries,
-  headingText,
-  paragraphText,
-}) {
+export default function Preview() {
+  const [settings] = useSettings();
+
+  const {
+    usingMediaQueries,
+    lowerScale,
+    upperScale,
+    scalingType,
+    mediaQueries,
+    headingText,
+    paragraphText,
+  } = settings;
+
   const [previewClasses, setPreviewClasses] = useState(preview.preview_content);
   const [styleCode, setStyleCode] = useState(``);
 

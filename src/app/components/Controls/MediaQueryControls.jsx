@@ -7,12 +7,13 @@ import {
 import controls from './controls.module.css';
 import Button from '../Button/Button';
 import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
+import { useSettings } from '@/context/SettingsContext';
 
-export default function MediaQueryControls({
-  mediaQueries,
-  updateMediaQueries,
-  resetScaleValues,
-}) {
+export default function MediaQueryControls() {
+  const [settings, updateSettings] = useSettings();
+
+  const { mediaQueries } = settings;
+
   function addMediaQuery() {
     // Set scale label
     let newLabel = 'nl';
@@ -119,15 +120,17 @@ export default function MediaQueryControls({
       }
     }
 
-    updateMediaQueries([
-      ...mediaQueries,
-      {
-        label: newLabel,
-        minWidth: newMinWidth,
-        scale: newScale,
-        id: mediaQueries.length,
-      },
-    ]);
+    updateSettings({
+      mediaQueries: [
+        ...mediaQueries,
+        {
+          label: newLabel,
+          minWidth: newMinWidth,
+          scale: newScale,
+          id: mediaQueries.length,
+        },
+      ],
+    });
   }
 
   function updateMediaQuery(index, prop, value) {
@@ -153,14 +156,20 @@ export default function MediaQueryControls({
     }
 
     // update mediaQueries state
-    updateMediaQueries(updatedMediaQueries);
+    updateSettings({ mediaQueries: updatedMediaQueries });
   }
 
   function removeMediaQuery(index) {
-    updateMediaQueries([
-      ...mediaQueries.slice(0, index),
-      ...mediaQueries.slice(index + 1),
-    ]);
+    updateSettings({
+      mediaQueries: [
+        ...mediaQueries.slice(0, index),
+        ...mediaQueries.slice(index + 1),
+      ],
+    });
+  }
+
+  function resetMediaQueries() {
+    updateSettings({ mediaQueries: getInitialMediaQueries() });
   }
 
   return (
@@ -263,7 +272,7 @@ export default function MediaQueryControls({
           JSON.stringify(getInitialMediaQueries()) && (
           <Button
             style={{ flexGrow: '1' }}
-            onClick={() => resetScaleValues('media')}
+            onClick={resetMediaQueries}
             secondary
             outline
           >
