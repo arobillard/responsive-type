@@ -15,7 +15,7 @@ export function getScaleByValue(value) {
 
 export const defaultMediaQueries = {
   labels: ['s', 'm', 'l', 'xl', 'xxl'],
-  minWidths: ['', '45em', '60em', '90em', '120em'],
+  minWidths: ['', '45rem', '60rem', '90rem', '120rem'],
   scales: [
     defaultScaleOptions[1],
     defaultScaleOptions[2],

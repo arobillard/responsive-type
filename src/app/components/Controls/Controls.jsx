@@ -4,31 +4,23 @@ import Switch from '../inputs/Switch/Switch';
 import MediaQueryControls from './MediaQueryControls';
 import ScalingControls from './ScalingControls';
 import Button from '../Button/Button';
-import { useEffect, useState } from 'react';
+import { useSettings } from '@/context/SettingsContext';
+import {
+  default_headingText,
+  default_paragraphText,
+} from '@/helpers/defaultText';
 
-export default function Controls({
-  usingMediaQueries,
-  updateUsingMediaQueries,
-  scalingType,
-  updateScalingType,
-  lowerScale,
-  updateLowerScale,
-  upperScale,
-  updateUpperScale,
-  headingText,
-  updateHeadingText,
-  mediaQueries,
-  updateMediaQueries,
-  paragraphText,
-  updateParagraphText,
-  resetScaleValues,
-  resetText,
-}) {
-  const [isClient, setIsClient] = useState(false);
+export default function Controls() {
+  const [settings, updateSettings] = useSettings();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const { usingMediaQueries, headingText, paragraphText } = settings;
+
+  function resetText() {
+    updateSettings({
+      headingText: default_headingText,
+      paragraphText: default_paragraphText,
+    });
+  }
 
   return (
     <section id="controls" className={controls.controls}>
@@ -37,27 +29,13 @@ export default function Controls({
       <Switch
         name="usingMediaQueries"
         label="Use @media"
-        onChange={() => updateUsingMediaQueries(!usingMediaQueries)}
+        onChange={() =>
+          updateSettings({ usingMediaQueries: !usingMediaQueries })
+        }
         checked={usingMediaQueries}
       />
 
-      {usingMediaQueries && isClient ? (
-        <MediaQueryControls
-          mediaQueries={mediaQueries}
-          updateMediaQueries={updateMediaQueries}
-          resetScaleValues={resetScaleValues}
-        />
-      ) : (
-        <ScalingControls
-          scalingType={scalingType}
-          updateScalingType={updateScalingType}
-          lowerScale={lowerScale}
-          updateLowerScale={updateLowerScale}
-          upperScale={upperScale}
-          updateUpperScale={updateUpperScale}
-          resetScaleValues={resetScaleValues}
-        />
-      )}
+      {usingMediaQueries ? <MediaQueryControls /> : <ScalingControls />}
 
       <h3 className={controls.controls_subHeading}>Content</h3>
       <div className={controls.grid_unit}>
@@ -67,7 +45,7 @@ export default function Controls({
           id="heading-text"
           name="heading-text"
           value={headingText}
-          onChange={(e) => updateHeadingText(e.target.value)}
+          onChange={(e) => updateSettings({ headingText: e.target.value })}
         />
       </div>
       <div className={controls.grid_unit}>
@@ -76,7 +54,7 @@ export default function Controls({
           id="paragraph-text"
           name="paragraph-text"
           value={paragraphText}
-          onChange={(e) => updateParagraphText(e.target.value)}
+          onChange={(e) => updateSettings({ paragraphText: e.target.value })}
         />
       </div>
       <Button onClick={resetText} secondary outline>

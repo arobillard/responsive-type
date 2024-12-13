@@ -2,23 +2,20 @@ import { useEffect, useState } from 'react';
 import { defaultScaleOptions } from '@/helpers/scales';
 import controls from './controls.module.css';
 import Button from '../Button/Button';
+import { useSettings } from '@/context/SettingsContext';
 
-export default function ScalingControls({
-  scalingType,
-  updateScalingType,
-  lowerScale,
-  updateLowerScale,
-  upperScale,
-  updateUpperScale,
-  resetScaleValues,
-}) {
+export default function ScalingControls() {
+  const [settings, updateSettings] = useSettings();
+
+  const { scalingType, upperScale, lowerScale } = settings;
+
   const [usingCustomLowerValue, setUsingCustomLowerValue] = useState(false);
   const [usingCustomUpperValue, setUsingCustomUpperValue] = useState(false);
 
   // A list of options for the lower scale value
   // that should be updated based on the upper scale value
   // to only include options smaller than upper scale
-  const [lowerScaleOptions, updateLowerScaleOptions] = useState(() => {
+  const [lowerScaleOptions, setLowerScaleOptions] = useState(() => {
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(upperScale);
     });
@@ -29,7 +26,7 @@ export default function ScalingControls({
   // A list of options for the upper scale value
   // that should be updated based on the lower scale value
   // to only include options larger than upper scale
-  const [upperScaleOptions, updateUpperScaleOptions] = useState(() => {
+  const [upperScaleOptions, setUpperScaleOptions] = useState(() => {
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(lowerScale);
     });
@@ -64,15 +61,14 @@ export default function ScalingControls({
       return;
     }
 
-    // Update state value
-    updateLowerScale(value);
+    updateSettings({ lowerScale: value });
 
     // update list of options if using a default scale value
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(value);
     });
 
-    updateUpperScaleOptions([
+    setUpperScaleOptions([
       ...defaultScaleOptions.slice(scaleIndex + 1, defaultScaleOptions.length),
     ]);
   }
@@ -85,13 +81,20 @@ export default function ScalingControls({
       return;
     }
 
-    updateUpperScale(value);
+    updateSettings({ upperScale: value });
 
     const scaleIndex = defaultScaleOptions.findIndex((option) => {
       return option.value === parseFloat(value);
     });
 
-    updateLowerScaleOptions([...defaultScaleOptions.slice(0, scaleIndex)]);
+    setLowerScaleOptions([...defaultScaleOptions.slice(0, scaleIndex)]);
+  }
+
+  function resetScales() {
+    updateSettings({
+      lowerScale: 1.125,
+      upperScale: 1.333,
+    });
   }
 
   if (lowerScale === null || upperScale === null) {
@@ -106,7 +109,7 @@ export default function ScalingControls({
         <select
           name="scaling-type"
           id="scaling-type"
-          onChange={(e) => updateScalingType(e.target.value)}
+          onChange={(e) => updateSettings({ scalingType: e.target.value })}
           value={scalingType}
         >
           <option value="cqi">cqi</option>
@@ -188,7 +191,7 @@ export default function ScalingControls({
 
       {(parseFloat(lowerScale) !== 1.125 ||
         parseFloat(upperScale) !== 1.333) && (
-        <Button onClick={() => resetScaleValues('scaling')} secondary outline>
+        <Button onClick={resetScales} secondary outline>
           <i className="material-symbols-outlined" aria-hidden="true">
             undo
           </i>

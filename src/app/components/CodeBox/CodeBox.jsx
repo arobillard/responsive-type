@@ -1,20 +1,20 @@
-import {
-  defaultHeadings,
-  generateClampedFontSize,
-  generateFontSizeByScale,
-  generateStyles,
-} from '@/helpers/scales';
+import { generateStyles } from '@/helpers/scales';
 import codeBox from './codeBox.module.css';
 import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
+import { useSettings } from '@/context/SettingsContext';
 
-export default function CodeBox({
-  usingMediaQueries,
-  scalingType,
-  lowerScale,
-  upperScale,
-  mediaQueries,
-}) {
+export default function CodeBox() {
+  const [settings] = useSettings();
+
+  const {
+    usingMediaQueries,
+    scalingType,
+    lowerScale,
+    upperScale,
+    mediaQueries,
+  } = settings;
+
   const [hasBeenCopied, setHasBeenCopied] = useState(false);
   const [outputCode, setOutputCode] = useState(``);
 
@@ -27,10 +27,6 @@ export default function CodeBox({
       setHasBeenCopied(false);
     }, 2000);
   }
-
-  // function generateClampHeadings() {
-
-  // }
 
   useEffect(() => {
     const generatedStyles = generateStyles(
