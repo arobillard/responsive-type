@@ -1,7 +1,7 @@
 .codeBox {
   padding: var(--spacer-base);
   background-color: var(--color-primary-pale);
-  width: 100vw;
+  width: 100vi;
 }
 
 .codeBox_title {
@@ -10,7 +10,7 @@
 }
 
 .pre {
-  width: 100vw;
+  width: 100vi;
   overflow-x: scroll;
   display: block;
   padding-inline: var(--spacer-base);

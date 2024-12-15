@@ -113,7 +113,7 @@ export default function ScalingControls() {
           value={scalingType}
         >
           <option value="cqi">cqi</option>
-          <option value="vw">vw</option>
+          <option value="vi">vi</option>
         </select>
       </div>
       <div className={controls.grid_unit}>
