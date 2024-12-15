@@ -1,0 +1,21 @@
+.edit_preview_text {
+  width: min(calc(100vi - var(--spacer-l)), 35rem);
+  border: 0;
+  border-radius: var(--radius);
+  padding: var(--spacer-l);
+  box-shadow: var(--shadow);
+}
+
+.edit_preview_text::backdrop {
+  background-color: #0009;
+}
+
+.edit_preview_text_grid {
+  display: grid;
+  gap: var(--spacer-base);
+}
+
+.edit_preview_text_button_wrap {
+  display: flex;
+  gap: var(--spacer-base);
+}

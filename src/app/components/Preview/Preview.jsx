@@ -9,6 +9,7 @@ import Heading from '../Heading';
 import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
 import { useEffect, useState } from 'react';
 import { useSettings } from '@/context/SettingsContext';
+import EditPreviewText from './EditPreviewText/EditPreviewText';
 
 export default function Preview() {
   const [settings] = useSettings();
@@ -48,9 +49,13 @@ export default function Preview() {
 
   return (
     <section id="preview" className={preview.preview}>
-      <h2 className={preview.preview_title}>
-        <span className="word_highlight">Preview</span>
-      </h2>
+      <div className={preview.preview_header}>
+        <h2 className={preview.preview_title}>
+          <span className="word_highlight">Preview</span>
+        </h2>
+
+        <EditPreviewText />
+      </div>
       {usingMediaQueries && (
         <style>
           {`.preview_mediaQuery {

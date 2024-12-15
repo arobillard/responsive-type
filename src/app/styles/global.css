@@ -37,6 +37,8 @@
   --radius-s: calc(var(--radius) / 2);
   --radius-l: calc(var(--radius) * 2);
 
+  --shadow: 0 var(--spacer-xs) var(--spacer-m) #0002;
+
   --transition: 0.2s;
 }
 
@@ -45,7 +47,7 @@
 *::after {
   box-sizing: border-box;
   &:focus-visible {
-    outline: 0.125rem solid var(--color-accent-bright);
+    outline: 0.125rem solid var(--color-primary-dark);
   }
 }
 

@@ -36,7 +36,7 @@
 
 .button_secondary {
   --btn-bg-color: var(--color-secondary);
-  --btn-text-color: var(--color-primary-dark);
+  --btn-text-color: #000;
 }
 
 /* .button_secondary.button_outline {
