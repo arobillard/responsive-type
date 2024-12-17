@@ -42,15 +42,17 @@ export default function CodeBox() {
 
   return (
     <section className={codeBox.codeBox}>
-      <h2 className={codeBox.codeBox_title}>
-        <span className="word_highlight word_highlight--dark">CSS Code</span>
-      </h2>
-      <Button outline onClick={copyCSSCode}>
-        <i className={`material-symbols-outlined`} aria-hidden="true">
-          {hasBeenCopied ? 'check_circle' : 'content_paste'}
-        </i>
-        Copy Code
-      </Button>
+      <div className={codeBox.codeBox_header}>
+        <h2 className={codeBox.codeBox_title}>
+          <span className="word_highlight word_highlight--dark">CSS Code</span>
+        </h2>
+        <Button outline onClick={copyCSSCode}>
+          <i className={`material-symbols-outlined`} aria-hidden="true">
+            {hasBeenCopied ? 'check_circle' : 'content_paste'}
+          </i>
+          Copy Code
+        </Button>
+      </div>
       <pre className={codeBox.pre}>
         <code>{outputCode}</code>
       </pre>

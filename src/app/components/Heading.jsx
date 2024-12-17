@@ -15,6 +15,6 @@ export default function Heading(props) {
     case 'h6':
       return <h6 {...props}>{children}</h6>;
     default:
-      break;
+      return <div {...props}>{children}</div>;
   }
 }

@@ -1,18 +1,15 @@
 import 'material-symbols';
-import {
-  defaultHeadings,
-  generateClampedFontSize,
-  generateStyles,
-} from '@/helpers/scales';
+import { generateClampedFontSize, generateStyles } from '@/helpers/scales';
 import preview from './preview.module.css';
 import Heading from '../Heading';
 import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
 import { useEffect, useState } from 'react';
 import { useSettings } from '@/context/SettingsContext';
 import EditPreviewText from './EditPreviewText/EditPreviewText';
+import Button from '../Button/Button';
 
 export default function Preview() {
-  const [settings] = useSettings();
+  const [settings, updateSettings] = useSettings();
 
   const {
     usingMediaQueries,
@@ -20,32 +17,29 @@ export default function Preview() {
     upperScale,
     scalingType,
     mediaQueries,
+    extraSteps,
+    includeH6,
     headingText,
     paragraphText,
   } = settings;
 
-  const [previewClasses, setPreviewClasses] = useState(preview.preview_content);
   const [styleCode, setStyleCode] = useState(``);
+  const [headings, setHeadings] = useState([]);
 
   useEffect(() => {
-    const generatedStyles = generateStyles(
-      usingMediaQueries,
-      lowerScale,
-      upperScale,
-      scalingType,
-      mediaQueries
-    );
+    const startingNum = includeH6 ? 6 : 5;
 
-    setStyleCode(generatedStyles);
-  }, [usingMediaQueries, lowerScale, upperScale, scalingType, mediaQueries]);
+    const updatedHeadings = [];
 
-  useEffect(() => {
-    setPreviewClasses(
-      usingMediaQueries
-        ? `preview_mediaQuery ${preview.preview_content}`
-        : preview.preview_content
-    );
-  }, [usingMediaQueries]);
+    for (let i = 0; i < startingNum + extraSteps; i++) {
+      updatedHeadings.push({
+        tag: startingNum - i > 0 ? `h${startingNum - i}` : 'div',
+        step: i + 1,
+      });
+    }
+
+    setHeadings(updatedHeadings.reverse());
+  }, [includeH6, extraSteps]);
 
   return (
     <section id="preview" className={preview.preview}>
@@ -56,15 +50,47 @@ export default function Preview() {
 
         <EditPreviewText />
       </div>
-      {usingMediaQueries && (
-        <style>
-          {`.preview_mediaQuery {
-            ${styleCode}
-          }`}
-        </style>
-      )}
-      <div className={previewClasses}>
-        {defaultHeadings.map(({ tag, step, style }) => {
+
+      <div class={preview.preview_button_wrap}>
+        <Button
+          onClick={() => updateSettings({ extraSteps: extraSteps + 1 })}
+          outline
+          hoverSuccess
+        >
+          <i className="material-symbols-outlined" aria-hidden="true">
+            add_circle
+          </i>
+          Add step
+        </Button>
+
+        {extraSteps > 0 && (
+          <Button
+            onClick={() => updateSettings({ extraSteps: extraSteps - 1 })}
+            outline
+            hoverSecondary
+          >
+            <i className="material-symbols-outlined" aria-hidden="true">
+              delete
+            </i>
+            Remove step
+          </Button>
+        )}
+        {extraSteps > 1 && (
+          <Button
+            onClick={() => updateSettings({ extraSteps: 0 })}
+            outline
+            hoverSecondary
+          >
+            <i className="material-symbols-outlined" aria-hidden="true">
+              undo
+            </i>
+            Reset steps
+          </Button>
+        )}
+      </div>
+
+      <div className={preview.preview_content}>
+        {headings.map(({ tag, step, style }) => {
           const font_size = generateClampedFontSize(
             lowerScale,
             upperScale,
@@ -73,9 +99,12 @@ export default function Preview() {
           );
 
           const headingStyles = {
-            marginBottom: '0.5rem',
             ...style,
           };
+
+          if (step > 3) {
+            headingStyles.lineHeight = '1.1';
+          }
 
           if (!usingMediaQueries) {
             headingStyles.fontSize = font_size;
@@ -86,7 +115,7 @@ export default function Preview() {
               className={preview.preview_heading_wrap}
             >
               {!usingMediaQueries && (
-                <FontSizeCopyLine tag={tag} font_size={font_size} />
+                <FontSizeCopyLine tag={tag} step={step} font_size={font_size} />
               )}
               <Heading
                 className={preview.preview_heading}
@@ -98,6 +127,22 @@ export default function Preview() {
             </div>
           );
         })}
+
+        {!includeH6 && (
+          <>
+            {!usingMediaQueries && (
+              <FontSizeCopyLine tag="h6" font_size="1rem" />
+            )}
+            <Heading
+              className={preview.preview_heading}
+              tag="h6"
+              style={{ fontSize: '1rem' }}
+            >
+              {headingText}
+            </Heading>
+          </>
+        )}
+
         <p>{paragraphText}</p>
       </div>
     </section>

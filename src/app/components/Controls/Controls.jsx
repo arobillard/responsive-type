@@ -8,7 +8,7 @@ import { useSettings } from '@/context/SettingsContext';
 export default function Controls() {
   const [settings, updateSettings] = useSettings();
 
-  const { usingMediaQueries } = settings;
+  const { usingMediaQueries, includeH6, asVariables } = settings;
 
   return (
     <section id="controls" className={controls.controls}>
@@ -20,7 +20,21 @@ export default function Controls() {
         onChange={() =>
           updateSettings({ usingMediaQueries: !usingMediaQueries })
         }
-        checked={usingMediaQueries}
+        checked={usingMediaQueries || false}
+      />
+
+      <Switch
+        name="includeH6"
+        label="Include h6 in scales"
+        onChange={() => updateSettings({ includeH6: !includeH6 })}
+        checked={includeH6 || false}
+      />
+
+      <Switch
+        name="asVariables"
+        label="Create as variables"
+        onChange={() => updateSettings({ asVariables: !asVariables })}
+        checked={asVariables || false}
       />
 
       {usingMediaQueries ? <MediaQueryControls /> : <ScalingControls />}

@@ -14,6 +14,9 @@ function SettingsProvider(props) {
     lowerScale: null,
     upperScale: null,
     mediaQueries: getInitialMediaQueries(),
+    extraSteps: 0,
+    includeH6: false,
+    asVariables: false,
     headingText: default_headingText,
     paragraphText: default_paragraphText,
   });
@@ -43,6 +46,9 @@ function SettingsProvider(props) {
       mediaQueries:
         JSON.parse(localStorage.getItem('rt-mediaQueries')) ||
         getInitialMediaQueries(),
+      extraSteps: parseInt(localStorage.getItem('rt-extraSteps')) || 0,
+      includeH6: localStorage.getItem('rt-includeH6') === 'true',
+      asVariables: localStorage.getItem('rt-asVariables') === 'true',
       headingText:
         localStorage.getItem('rt-headingText') || default_headingText,
       paragraphText:

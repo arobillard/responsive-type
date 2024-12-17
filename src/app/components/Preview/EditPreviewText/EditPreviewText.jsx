@@ -46,11 +46,11 @@ export default function EditPreviewText() {
         <i className="material-symbols-outlined" aria-hidden="true">
           edit
         </i>
-        <ScreenReaderText>Edit preview text</ScreenReaderText>
+        Edit text
       </Button>
 
-      <dialog class={edit_preview_text.edit_preview_text} ref={dialogRef}>
-        <div class={edit_preview_text.edit_preview_text_grid}>
+      <dialog className={edit_preview_text.edit_preview_text} ref={dialogRef}>
+        <div className={edit_preview_text.edit_preview_text_grid}>
           <h3 style={{ margin: 0 }}>Edit Preview Text</h3>
           <div>
             <label htmlFor="heading-text">Heading</label>
@@ -74,7 +74,7 @@ export default function EditPreviewText() {
             />
           </div>
 
-          <div class={edit_preview_text.edit_preview_text_button_wrap}>
+          <div className={edit_preview_text.edit_preview_text_button_wrap}>
             {(headingText !== default_headingText ||
               paragraphText !== default_paragraphText) && (
               <Button

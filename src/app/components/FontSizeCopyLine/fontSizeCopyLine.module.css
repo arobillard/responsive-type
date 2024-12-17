@@ -5,7 +5,7 @@
   z-index: 1;
 }
 
-.fontSizeCopyLine_code {
+.fontSizeCopyLine_code:where(:not(button > code)) {
   padding: var(--spacer-xs) var(--spacer-s);
   border-radius: var(--radius-s);
   background-color: var(--color-secondary);
@@ -14,27 +14,31 @@
   white-space: nowrap;
 }
 
-.fontSizeCopyLine_code:has(+ code, + button) {
+.fontSizeCopyLine_code:where(:first-child) {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
 
-.fontSizeCopyLine_copy + .fontSizeCopyLine_code,
+/* .fontSizeCopyLine_copy + .fontSizeCopyLine_code,
 .fontSizeCopyLine_code + .fontSizeCopyLine_code {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
   border-inline-start: 0;
-}
+} */
 
 .fontSizeCopyLine_copy {
   padding: var(--spacer-xs) var(--spacer-s);
   background-color: var(--color-secondary);
   border: 0.0625rem solid var(--color-primary);
-  border-radius: var(--radius-s) 0 0 var(--radius-s);
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
   white-space: nowrap;
+}
+
+.fontSizeCopyLine_copy:where(:last-child) {
+  border-radius: 0 var(--spacer-s) var(--spacer-s) 0;
 }
 
 .fontSizeCopyLine_copy:where(:hover, :focus-visible) {

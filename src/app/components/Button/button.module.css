@@ -53,6 +53,11 @@
   --btn-text-color: var(--color-secondary);
 }
 
+.button_hoverSecondary:where(:hover, :focus-visible) {
+  --btn-bg-color: var(--color-accent);
+  --btn-text-color: var(--color-secondary);
+}
+
 .button_paddingSubtle {
   padding: var(--spacer-em-s);
 }
