@@ -32,7 +32,7 @@ export default function Controls() {
 
       <Switch
         name="asVariables"
-        label="Create as variables"
+        label="Use CSS Variables"
         onChange={() => updateSettings({ asVariables: !asVariables })}
         checked={asVariables || false}
       />

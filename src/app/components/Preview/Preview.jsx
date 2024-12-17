@@ -51,7 +51,7 @@ export default function Preview() {
         <EditPreviewText />
       </div>
 
-      <div class={preview.preview_button_wrap}>
+      <div className={preview.preview_button_wrap}>
         <Button
           onClick={() => updateSettings({ extraSteps: extraSteps + 1 })}
           outline

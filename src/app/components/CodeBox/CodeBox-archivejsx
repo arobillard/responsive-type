@@ -1,4 +1,4 @@
-import { generateClampStyles, generateStyles } from '@/helpers/scales';
+import { generateStyles } from '@/helpers/scales';
 import codeBox from './codeBox.module.css';
 import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
@@ -13,9 +13,6 @@ export default function CodeBox() {
     lowerScale,
     upperScale,
     mediaQueries,
-    includeH6,
-    extraSteps,
-    asVariables,
   } = settings;
 
   const [hasBeenCopied, setHasBeenCopied] = useState(false);
@@ -32,29 +29,16 @@ export default function CodeBox() {
   }
 
   useEffect(() => {
-    if (usingMediaQueries) {
-      console.log('gonna use media queries');
-    } else {
-      const cssCode = generateClampStyles(
-        lowerScale,
-        upperScale,
-        scalingType,
-        includeH6,
-        extraSteps,
-        asVariables
-      );
-      setOutputCode(cssCode);
-    }
-  }, [
-    usingMediaQueries,
-    lowerScale,
-    upperScale,
-    scalingType,
-    mediaQueries,
-    includeH6,
-    extraSteps,
-    asVariables,
-  ]);
+    const generatedStyles = generateStyles(
+      usingMediaQueries,
+      lowerScale,
+      upperScale,
+      scalingType,
+      mediaQueries
+    );
+
+    setOutputCode(generatedStyles);
+  }, [usingMediaQueries, lowerScale, upperScale, scalingType, mediaQueries]);
 
   return (
     <section className={codeBox.codeBox}>
