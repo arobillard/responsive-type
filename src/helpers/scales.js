@@ -176,6 +176,51 @@ export function generateClampVariables(rulesets) {
   return variablesAsArray.join(`\n  `);
 }
 
+export function generateMQVariables(mediaQueries, stepsAsArray) {
+  let cssString = '';
+  // loop through media queries
+  mediaQueries.forEach(({ label, minWidth, scale }, i) => {
+    let indent = '  ';
+    // Label MQ
+    cssString =
+      cssString +
+      `\n\n  /* ----- ${label.toUpperCase()} | scale: ${scale.value} - ${
+        scale.label
+      } ----- */`;
+    if (i > 0) {
+      // if not first loop, add appropriate @media
+      cssString =
+        cssString + `\n  @media only screen and (min-width: ${minWidth}) {`;
+
+      // increase indent for within the @media
+      indent = '    ';
+    }
+
+    // loop through stepsAsArray
+    stepsAsArray.forEach(({ selectors, step }) => {
+      // get type scale label from selectors
+
+      // set variable name
+      const variableName = selectors
+        .filter((s) => s.includes('type-scale'))[0]
+        .replace('.', '--');
+
+      // set variable value
+      const fontSize = generateFontSizeByScale(scale.value, step);
+
+      // append string
+      cssString = cssString + `\n${indent}${variableName}: ${fontSize};`;
+    });
+
+    if (i > 0) {
+      // if not first loop, add closing }
+      cssString = cssString + `\n  }`;
+    }
+  });
+
+  return cssString;
+}
+
 export function generateClampStyles(
   lowerScale,
   upperScale,
@@ -271,7 +316,92 @@ export function generateClampStyles(
   return cssString;
 }
 
-export function generateMQStyles(mediaQueries) {}
+export function generateMQStyles(
+  mediaQueries,
+  includeH6,
+  extraSteps,
+  asVariables
+) {
+  const classNameBase = '.type-scale-';
+  const startingNum = includeH6 ? 6 : 5;
+
+  // create array scale steps including default headings and extraSteps
+  const stepsAsArray = [];
+
+  if (!includeH6) {
+    stepsAsArray.push({
+      selectors: ['h6', `${classNameBase}h6`],
+      step: 0,
+    });
+  }
+
+  for (let i = 0; i < startingNum + extraSteps; i++) {
+    const selectors = [];
+
+    // set up selectors
+
+    // base selector label
+    let label = `h${startingNum - i}`;
+
+    if (startingNum - i > 0) {
+      // Base headings route
+
+      // add heading element selector
+      selectors.push(`h${startingNum - i}`);
+    } else {
+      // Extra scales route
+
+      // generate class name for extra steps
+      const amount = includeH6 ? i - 5 : i - 4;
+
+      label = '';
+
+      // for each step above basic headings, add an extra `x`
+      for (let i = 0; i < amount; i++) {
+        label = `${label}x`;
+      }
+
+      // complete `xl` like label
+      label = `${label}l`;
+    }
+
+    // add classname selector
+    selectors.push(`${classNameBase}${label}`);
+
+    stepsAsArray.push({
+      selectors,
+      step: i + 1,
+    });
+  }
+
+  const reorderedSteps = [...stepsAsArray].reverse();
+
+  let cssString = generatedStylesStart;
+
+  // create a similar set up as convertRuleSetArrayToString for the steps
+
+  // TODO: simplify things by combining rulesets with stepsAsArray? Put steps in both?
+
+  if (asVariables) {
+    // if asVariables loop through mqs in :root
+    cssString =
+      cssString +
+      `\n\n:root {
+  /* Type Scales */${generateMQVariables(mediaQueries, reorderedSteps)}
+}`;
+
+    // loop through each step and update scale variable per mqs in :root
+    // apply variables to each step's selectors
+  }
+
+  // else not using asVariables
+
+  // loop through mqs
+
+  // output each step in each mq
+
+  return cssString;
+}
 
 export function generateStyles(
   usingMediaQueries,

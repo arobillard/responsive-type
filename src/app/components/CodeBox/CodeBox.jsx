@@ -1,4 +1,8 @@
-import { generateClampStyles, generateStyles } from '@/helpers/scales';
+import {
+  generateClampStyles,
+  generateMQStyles,
+  generateStyles,
+} from '@/helpers/scales';
 import codeBox from './codeBox.module.css';
 import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
@@ -33,17 +37,20 @@ export default function CodeBox() {
 
   useEffect(() => {
     if (usingMediaQueries) {
-      console.log('gonna use media queries');
-    } else {
-      const cssCode = generateClampStyles(
-        lowerScale,
-        upperScale,
-        scalingType,
-        includeH6,
-        extraSteps,
-        asVariables
+      setOutputCode(
+        generateMQStyles(mediaQueries, includeH6, extraSteps, asVariables)
       );
-      setOutputCode(cssCode);
+    } else {
+      setOutputCode(
+        generateClampStyles(
+          lowerScale,
+          upperScale,
+          scalingType,
+          includeH6,
+          extraSteps,
+          asVariables
+        )
+      );
     }
   }, [
     usingMediaQueries,
@@ -62,7 +69,7 @@ export default function CodeBox() {
         <h2 className={codeBox.codeBox_title}>
           <span className="word_highlight word_highlight--dark">CSS Code</span>
         </h2>
-        <Button outline onClick={copyCSSCode}>
+        <Button outline onClick={copyCSSCode} hoverSuccess={hasBeenCopied}>
           <i className={`material-symbols-outlined`} aria-hidden="true">
             {hasBeenCopied ? 'check_circle' : 'content_paste'}
           </i>
