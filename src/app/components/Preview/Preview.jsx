@@ -1,5 +1,9 @@
 import 'material-symbols';
-import { generateClampedFontSize, generateStyles } from '@/helpers/scales';
+import {
+  generateClampedFontSize,
+  generateMQStyles,
+  generateStyles,
+} from '@/helpers/scales';
 import preview from './preview.module.css';
 import Heading from '../Heading';
 import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
@@ -24,6 +28,7 @@ export default function Preview() {
   } = settings;
 
   const [styleCode, setStyleCode] = useState(``);
+  const [previewClasses, setPreviewClasses] = useState(preview.preview_content);
   const [headings, setHeadings] = useState([]);
 
   useEffect(() => {
@@ -40,6 +45,25 @@ export default function Preview() {
 
     setHeadings(updatedHeadings.reverse());
   }, [includeH6, extraSteps]);
+
+  useEffect(() => {
+    const generatedStyles = generateMQStyles(
+      mediaQueries,
+      includeH6,
+      extraSteps,
+      false
+    );
+
+    setStyleCode(generatedStyles);
+  }, [mediaQueries, includeH6, extraSteps]);
+
+  useEffect(() => {
+    setPreviewClasses(
+      usingMediaQueries
+        ? `preview_mediaQuery ${preview.preview_content}`
+        : preview.preview_content
+    );
+  }, [usingMediaQueries]);
 
   return (
     <section id="preview" className={preview.preview}>
@@ -88,9 +112,17 @@ export default function Preview() {
           </Button>
         )}
       </div>
-
-      <div className={preview.preview_content}>
+      {usingMediaQueries && (
+        <style>
+          {`.preview_mediaQuery {
+            ${styleCode}
+          }`}
+        </style>
+      )}
+      <div className={previewClasses}>
         {headings.map(({ tag, step, style }) => {
+          // TODO: add a classname to the extra steps
+
           const font_size = generateClampedFontSize(
             lowerScale,
             upperScale,
