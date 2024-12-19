@@ -369,17 +369,47 @@ export function generateMQStyles(
 
 ${convertRuleSetArrayToString(ruleSetsArray, asVariables)}`;
 
-    cssString = cssString + generatedStylesEnd;
-
     // loop through each step and update scale variable per mqs in :root
     // apply variables to each step's selectors
+  } else {
+    mediaQueries.forEach(({ label, minWidth, scale }, i) => {
+      let indent = '';
+
+      // Label MQ
+      cssString =
+        cssString +
+        `\n\n/* ----- ${label.toUpperCase()} | scale: ${scale.value} - ${
+          scale.label
+        } ----- */`;
+      if (i > 0) {
+        // if not first loop, add appropriate @media
+        cssString =
+          cssString + `\n@media only screen and (min-width: ${minWidth}) {`;
+
+        // increase indent for within the @media
+        indent = '  ';
+      }
+
+      // loop through stepsAsArray
+      ruleSetsArray.forEach(({ selectors, step }) => {
+        // add selectors
+        cssString =
+          cssString +
+          `\n\n${indent}${selectors.join(`, \n${indent}`)} {
+  ${indent}font-size: ${generateFontSizeByScale(scale.value, step)};
+${indent}}`;
+      });
+
+      if (i > 0) {
+        // if not first loop, add closing }
+        cssString = cssString + `\n\n}`;
+      }
+    });
+
+    cssString = cssString + '\n\n';
   }
 
-  // else not using asVariables
-
-  // loop through mqs
-
-  // output each step in each mq
+  cssString = cssString + generatedStylesEnd;
 
   return cssString;
 }
