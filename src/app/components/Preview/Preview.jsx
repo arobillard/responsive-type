@@ -131,7 +131,7 @@ export default function Preview() {
 
           let font_size = null;
 
-          if (rules[0]) {
+          if (rules[0] && !usingMediaQueries) {
             font_size = rules[0][1];
           }
 
