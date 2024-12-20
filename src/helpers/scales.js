@@ -126,7 +126,7 @@ export function generateRuleSetArray(
   upperScale,
   scalingType
 ) {
-  const classNameBase = '.type-scale-';
+  const labelBase = 'type-scale-';
   const startingNum = includeH6 ? 6 : 5;
 
   // Create rule sets data
@@ -135,7 +135,8 @@ export function generateRuleSetArray(
   // if not including h6 in scales, add basic h6 ruleset
   if (!includeH6) {
     ruleSets.push({
-      selectors: ['h6', `${classNameBase}h6`],
+      selectors: ['h6', `.${labelBase}h6`],
+      variableName: `--${labelBase}h6`,
       rules: [['font-size', '1rem']],
     });
   }
@@ -173,7 +174,7 @@ export function generateRuleSetArray(
     }
 
     // add classname selector
-    selectors.push(`${classNameBase}${label}`);
+    selectors.push(`.${labelBase}${label}`);
 
     // add rules if necessary styles are provided
     if (lowerScale && upperScale && scalingType) {
@@ -187,6 +188,7 @@ export function generateRuleSetArray(
     // push
     ruleSets.push({
       selectors,
+      variableName: `--${labelBase}${label}`,
       rules,
       step: i + 1,
     });
@@ -194,15 +196,13 @@ export function generateRuleSetArray(
 
   const reorderedRuleSets = [...ruleSets].reverse();
 
-  console.log(reorderedRuleSets);
-
   return reorderedRuleSets;
 }
 
-export function convertRuleSetArrayToString(rulesets, asVariables) {
+export function convertRuleSetArrayToString(ruleSets, asVariables) {
   let cssString = ``;
 
-  rulesets.forEach(({ selectors, rules }) => {
+  ruleSets.forEach(({ selectors, rules }) => {
     const rulesAsString = [];
 
     if (rules.length) {
@@ -243,17 +243,19 @@ export function convertRuleSetArrayToString(rulesets, asVariables) {
   return cssString;
 }
 
-export function generateClampVariables(rulesets) {
+export function generateClampVariables(ruleSets) {
   const variablesAsArray = [];
 
-  rulesets.forEach(({ selectors, rules }) => {
+  ruleSets.forEach(({ selectors, rules }) => {
     // get type scale label from selectors
     const variableName = selectors
       .filter((s) => s.includes('type-scale'))[0]
       .replace('.', '--');
 
     // get font size rule
-    const fontSize = rules.filter((r) => r.includes('font-size'))[0][1];
+    const fontSize = rules.length
+      ? rules.filter((r) => r.includes('font-size'))[0][1]
+      : '';
     // get font size value
 
     // combine label as variable name with font-size value

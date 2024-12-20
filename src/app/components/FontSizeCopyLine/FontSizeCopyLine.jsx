@@ -5,7 +5,7 @@ import { useSettings } from '@/context/SettingsContext';
 
 export default function FontSizeCopyLine({ tag, font_size, step }) {
   const [settings] = useSettings();
-  const { extraSteps, includeH6, asVariables } = settings;
+  const { includeH6, asVariables } = settings;
   const [varHasBeenCopied, setVarHasBeenCopied] = useState(false);
   const [codeHasBeenCopied, setCodeHasBeenCopied] = useState(false);
 
@@ -13,7 +13,7 @@ export default function FontSizeCopyLine({ tag, font_size, step }) {
 
   let label = tag;
 
-  if (tag === 'div') {
+  if (tag.includes('.')) {
     const amount = includeH6 ? step - 6 : step - 5;
 
     label = '';
@@ -23,10 +23,6 @@ export default function FontSizeCopyLine({ tag, font_size, step }) {
     }
 
     label = `${label}l`;
-  }
-
-  if (tag === 'h6' && !includeH6) {
-    label = 'base';
   }
 
   function copyCSSCode() {
@@ -84,18 +80,20 @@ export default function FontSizeCopyLine({ tag, font_size, step }) {
           </code>
         </button>
       )}
-      <button
-        className={`${fontSizeCopyLine.fontSizeCopyLine_copy}${
-          codeHasBeenCopied
-            ? ` ${fontSizeCopyLine.fontSizeCopyLine_copied}`
-            : ''
-        }`}
-        onClick={copyCSSCode}
-      >
-        <code className={fontSizeCopyLine.fontSizeCopyLine_code}>
-          {cssCode}
-        </code>
-      </button>
+      {font_size && (
+        <button
+          className={`${fontSizeCopyLine.fontSizeCopyLine_copy}${
+            codeHasBeenCopied
+              ? ` ${fontSizeCopyLine.fontSizeCopyLine_copied}`
+              : ''
+          }`}
+          onClick={copyCSSCode}
+        >
+          <code className={fontSizeCopyLine.fontSizeCopyLine_code}>
+            {cssCode}
+          </code>
+        </button>
+      )}
     </div>
   );
 }

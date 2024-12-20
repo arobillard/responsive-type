@@ -3,6 +3,7 @@
   display: flex;
   position: relative;
   z-index: 1;
+  font-size: 0.75rem;
 }
 
 .fontSizeCopyLine_code:where(:not(button > code)) {
@@ -14,7 +15,7 @@
   white-space: nowrap;
 }
 
-.fontSizeCopyLine_code:where(:first-child) {
+.fontSizeCopyLine_code:where(:first-child:not(:last-child)) {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }

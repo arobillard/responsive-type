@@ -1,8 +1,8 @@
 import 'material-symbols';
 import {
-  generateClampedFontSize,
+  generateClampStyles,
   generateMQStyles,
-  generateStyles,
+  generateRuleSetArray,
 } from '@/helpers/scales';
 import preview from './preview.module.css';
 import Heading from '../Heading';
@@ -28,42 +28,42 @@ export default function Preview() {
   } = settings;
 
   const [styleCode, setStyleCode] = useState(``);
-  const [previewClasses, setPreviewClasses] = useState(preview.preview_content);
-  const [headings, setHeadings] = useState([]);
+  const [ruleSets, setRuleSets] = useState([]);
 
   useEffect(() => {
-    const startingNum = includeH6 ? 6 : 5;
-
-    const updatedHeadings = [];
-
-    for (let i = 0; i < startingNum + extraSteps; i++) {
-      updatedHeadings.push({
-        tag: startingNum - i > 0 ? `h${startingNum - i}` : 'div',
-        step: i + 1,
-      });
-    }
-
-    setHeadings(updatedHeadings.reverse());
-  }, [includeH6, extraSteps]);
-
-  useEffect(() => {
-    const generatedStyles = generateMQStyles(
-      mediaQueries,
-      includeH6,
-      extraSteps,
-      false
+    setRuleSets(
+      generateRuleSetArray(
+        extraSteps,
+        includeH6,
+        lowerScale,
+        upperScale,
+        scalingType
+      )
     );
+  }, [extraSteps, includeH6, lowerScale, upperScale, scalingType]);
+
+  useEffect(() => {
+    const generatedStyles = usingMediaQueries
+      ? generateMQStyles(mediaQueries, includeH6, extraSteps, false)
+      : generateClampStyles(
+          lowerScale,
+          upperScale,
+          scalingType,
+          includeH6,
+          extraSteps,
+          false
+        );
 
     setStyleCode(generatedStyles);
-  }, [mediaQueries, includeH6, extraSteps]);
-
-  useEffect(() => {
-    setPreviewClasses(
-      usingMediaQueries
-        ? `preview_mediaQuery ${preview.preview_content}`
-        : preview.preview_content
-    );
-  }, [usingMediaQueries]);
+  }, [
+    mediaQueries,
+    includeH6,
+    extraSteps,
+    lowerScale,
+    upperScale,
+    scalingType,
+    usingMediaQueries,
+  ]);
 
   return (
     <section id="preview" className={preview.preview}>
@@ -112,46 +112,39 @@ export default function Preview() {
           </Button>
         )}
       </div>
-      {usingMediaQueries && (
-        <style>
-          {`.preview_mediaQuery {
+      <style>
+        {`.preview_mediaQuery {
             ${styleCode}
           }`}
-        </style>
-      )}
-      <div className={previewClasses}>
-        {headings.map(({ tag, step, style }) => {
-          // TODO: add a classname to the extra steps
+      </style>
+      <div className={`preview_mediaQuery ${preview.preview_content}`}>
+        {ruleSets.map(({ selectors, variableName, rules, step }) => {
+          const headingClasses = `${preview.preview_heading} ${selectors[
+            selectors.length - 1
+          ].replace('.', '')}`;
 
-          const font_size = generateClampedFontSize(
-            lowerScale,
-            upperScale,
-            scalingType,
-            step
-          );
-
-          const headingStyles = {
-            ...style,
-          };
+          const headingStyles = {};
 
           if (step > 3) {
             headingStyles.lineHeight = '1.1';
           }
 
-          if (!usingMediaQueries) {
-            headingStyles.fontSize = font_size;
+          let font_size = null;
+
+          if (rules[0]) {
+            font_size = rules[0][1];
           }
+
           return (
-            <div
-              key={`heading-${step}`}
-              className={preview.preview_heading_wrap}
-            >
-              {!usingMediaQueries && (
-                <FontSizeCopyLine tag={tag} step={step} font_size={font_size} />
-              )}
+            <div key={variableName} className={preview.preview_heading_wrap}>
+              <FontSizeCopyLine
+                tag={selectors[0]}
+                step={step}
+                font_size={font_size}
+              />
               <Heading
-                className={preview.preview_heading}
-                tag={tag}
+                className={headingClasses}
+                tag={selectors[0]}
                 style={headingStyles}
               >
                 {headingText}
@@ -159,21 +152,6 @@ export default function Preview() {
             </div>
           );
         })}
-
-        {!includeH6 && (
-          <>
-            {!usingMediaQueries && (
-              <FontSizeCopyLine tag="h6" font_size="1rem" />
-            )}
-            <Heading
-              className={preview.preview_heading}
-              tag="h6"
-              style={{ fontSize: '1rem' }}
-            >
-              {headingText}
-            </Heading>
-          </>
-        )}
 
         <p>{paragraphText}</p>
       </div>
