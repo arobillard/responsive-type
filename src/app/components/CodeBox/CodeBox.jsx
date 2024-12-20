@@ -1,4 +1,8 @@
-import { generateStyles } from '@/helpers/scales';
+import {
+  generateClampStyles,
+  generateMQStyles,
+  generateStyles,
+} from '@/helpers/scales';
 import codeBox from './codeBox.module.css';
 import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
@@ -13,6 +17,9 @@ export default function CodeBox() {
     lowerScale,
     upperScale,
     mediaQueries,
+    includeH6,
+    extraSteps,
+    asVariables,
   } = settings;
 
   const [hasBeenCopied, setHasBeenCopied] = useState(false);
@@ -29,28 +36,46 @@ export default function CodeBox() {
   }
 
   useEffect(() => {
-    const generatedStyles = generateStyles(
-      usingMediaQueries,
-      lowerScale,
-      upperScale,
-      scalingType,
-      mediaQueries
-    );
-
-    setOutputCode(generatedStyles);
-  }, [usingMediaQueries, lowerScale, upperScale, scalingType, mediaQueries]);
+    if (usingMediaQueries) {
+      setOutputCode(
+        generateMQStyles(mediaQueries, includeH6, extraSteps, asVariables)
+      );
+    } else {
+      setOutputCode(
+        generateClampStyles(
+          lowerScale,
+          upperScale,
+          scalingType,
+          includeH6,
+          extraSteps,
+          asVariables
+        )
+      );
+    }
+  }, [
+    usingMediaQueries,
+    lowerScale,
+    upperScale,
+    scalingType,
+    mediaQueries,
+    includeH6,
+    extraSteps,
+    asVariables,
+  ]);
 
   return (
     <section className={codeBox.codeBox}>
-      <h2 className={codeBox.codeBox_title}>
-        <span className="word_highlight word_highlight--dark">CSS Code</span>
-      </h2>
-      <Button outline onClick={copyCSSCode}>
-        <i className={`material-symbols-outlined`} aria-hidden="true">
-          {hasBeenCopied ? 'check_circle' : 'content_paste'}
-        </i>
-        Copy Code
-      </Button>
+      <div className={codeBox.codeBox_header}>
+        <h2 className={codeBox.codeBox_title}>
+          <span className="word_highlight word_highlight--dark">CSS Code</span>
+        </h2>
+        <Button outline onClick={copyCSSCode} hoverSuccess={hasBeenCopied}>
+          <i className={`material-symbols-outlined`} aria-hidden="true">
+            {hasBeenCopied ? 'check_circle' : 'content_paste'}
+          </i>
+          Copy Code
+        </Button>
+      </div>
       <pre className={codeBox.pre}>
         <code>{outputCode}</code>
       </pre>

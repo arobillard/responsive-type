@@ -1,25 +1,53 @@
 import { useState } from 'react';
 import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
 import fontSizeCopyLine from './fontSizeCopyLine.module.css';
+import { useSettings } from '@/context/SettingsContext';
 
-export default function FontSizeCopyLine({ tag, font_size }) {
-  const [hasBeenCopied, setHasBeenCopied] = useState(false);
+export default function FontSizeCopyLine({ tag, font_size, step }) {
+  const [settings] = useSettings();
+  const { includeH6, asVariables } = settings;
+  const [varHasBeenCopied, setVarHasBeenCopied] = useState(false);
+  const [codeHasBeenCopied, setCodeHasBeenCopied] = useState(false);
 
   const cssCode = `font-size: ${font_size};`;
 
-  function copyCSSCode() {
-    navigator.clipboard.writeText(cssCode);
+  let label = tag;
 
-    setHasBeenCopied(true);
+  if (tag.includes('.')) {
+    const amount = includeH6 ? step - 6 : step - 5;
+
+    label = '';
+
+    for (let i = 0; i < amount; i++) {
+      label = `${label}x`;
+    }
+
+    label = `${label}l`;
+  }
+
+  function copyCSSCode() {
+    navigator.clipboard.writeText(`font-size: ${font_size};`);
+
+    setCodeHasBeenCopied(true);
 
     setTimeout(() => {
-      setHasBeenCopied(false);
+      setCodeHasBeenCopied(false);
+    }, 2000);
+  }
+
+  function copyCSSVariable() {
+    navigator.clipboard.writeText(`font-size: var(--type-scale-${label});`);
+
+    setVarHasBeenCopied(true);
+
+    setTimeout(() => {
+      setVarHasBeenCopied(false);
     }, 2000);
   }
 
   return (
     <div className={fontSizeCopyLine.fontSizeCopyLine}>
-      <button
+      {/* <button
         className={`${fontSizeCopyLine.fontSizeCopyLine_copy}${
           hasBeenCopied ? ` ${fontSizeCopyLine.fontSizeCopyLine_copied}` : ''
         }`}
@@ -31,10 +59,41 @@ export default function FontSizeCopyLine({ tag, font_size }) {
         >
           {hasBeenCopied ? 'check_circle' : 'content_paste'}
         </i>
-        <ScreenReaderText>Copy {tag} font-size CSS code</ScreenReaderText>
-      </button>
-      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>{tag}</code>
-      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>{cssCode}</code>
+        <ScreenReaderText>
+          Copy step {step} {asVariables ? 'variable' : 'font-size CSS code'}
+        </ScreenReaderText>
+      </button> */}
+      <code className={fontSizeCopyLine.fontSizeCopyLine_code}>
+        {tag === 'h6' ? tag : label}
+      </code>
+      {asVariables && (
+        <button
+          className={`${fontSizeCopyLine.fontSizeCopyLine_copy}${
+            varHasBeenCopied
+              ? ` ${fontSizeCopyLine.fontSizeCopyLine_copied}`
+              : ''
+          }`}
+          onClick={copyCSSVariable}
+        >
+          <code className={fontSizeCopyLine.fontSizeCopyLine_code}>
+            --type-scale-{label}
+          </code>
+        </button>
+      )}
+      {font_size && (
+        <button
+          className={`${fontSizeCopyLine.fontSizeCopyLine_copy}${
+            codeHasBeenCopied
+              ? ` ${fontSizeCopyLine.fontSizeCopyLine_copied}`
+              : ''
+          }`}
+          onClick={copyCSSCode}
+        >
+          <code className={fontSizeCopyLine.fontSizeCopyLine_code}>
+            {cssCode}
+          </code>
+        </button>
+      )}
     </div>
   );
 }

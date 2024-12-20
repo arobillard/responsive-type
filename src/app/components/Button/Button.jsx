@@ -7,6 +7,7 @@ export default function Button({
   outline,
   paddingSubtle,
   hoverSuccess,
+  hoverSecondary,
   onClick,
   style,
 }) {
@@ -16,6 +17,7 @@ export default function Button({
   if (secondary) class_list.push(button.button_secondary);
   if (paddingSubtle) class_list.push(button.button_paddingSubtle);
   if (hoverSuccess) class_list.push(button.button_hoverSuccess);
+  if (hoverSecondary) class_list.push(button.button_hoverSecondary);
 
   return (
     <button

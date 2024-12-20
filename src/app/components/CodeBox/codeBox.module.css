@@ -4,6 +4,13 @@
   width: 100vi;
 }
 
+.codeBox_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacer-base);
+}
+
 .codeBox_title {
   text-transform: uppercase;
   font-size: var(--type-step-3);
