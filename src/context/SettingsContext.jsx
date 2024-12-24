@@ -20,6 +20,7 @@ function SettingsProvider(props) {
     asVariables: true,
     headingText: default_headingText,
     paragraphText: default_paragraphText,
+    scalingOpen: true,
     previewOpen: true,
     codeBoxOpen: false,
   });
@@ -61,7 +62,12 @@ function SettingsProvider(props) {
         localStorage.getItem('rt-headingText') || default_headingText,
       paragraphText:
         localStorage.getItem('rt-paragraphText') || default_paragraphText,
-      previewOpen: localStorage.getItem('rt-previewOpen') === 'true',
+      scalingOpen: localStorage.getItem('rt-scalingOpen')
+        ? localStorage.getItem('rt-scalingOpen') === 'true'
+        : true,
+      previewOpen: localStorage.getItem('rt-previewOpen')
+        ? localStorage.getItem('rt-previewOpen') === 'true'
+        : true,
       codeBoxOpen: localStorage.getItem('rt-codeBoxOpen') === 'true',
     });
   }, []);

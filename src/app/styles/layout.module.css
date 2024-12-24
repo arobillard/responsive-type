@@ -17,10 +17,15 @@
   padding: var(--spacer-base);
 
   @media only screen and (min-width: 50em) {
+    --sidebar-width: 20rem;
     display: grid;
-    grid-template-columns: 20rem 1fr;
+    grid-template-columns: var(--sidebar-width) 1fr;
     gap: 0;
     padding: 0;
+  }
+
+  @media only screen and (min-width: 80em) {
+    --sidebar-width: 25rem;
   }
 }
 
@@ -40,6 +45,30 @@
 
 .layout_title {
   font-size: var(--type-scale-xxxl);
+  /* text-shadow: 0.125rem 0.125rem var(--color-secondary); */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--spacer-m);
+}
+
+.layout_title span {
+  display: block;
+}
+
+.layout_title_line {
+  height: 0.25rem;
+  background-color: var(--color-primary);
+  flex-grow: 1;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem var(--color-secondary), 0 0.25rem var(--color-accent);
+  translate: 0 -0.25rem;
+}
+
+.layout_disclaimer {
+  @media only screen and (min-width: 50em) {
+    display: none;
+  }
 }
 
 .layout_content {

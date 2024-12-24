@@ -33,12 +33,12 @@
 }
 
 .preview_heading_wrap {
-  margin-block-end: var(--spacer-base);
+  margin-block-end: var(--spacer-m);
 }
 
 .preview_heading {
   white-space: nowrap;
-  margin-block-end: var(--spacer-base);
+  margin-block-end: 0;
   font-weight: bold;
 }
 

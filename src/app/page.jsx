@@ -12,7 +12,14 @@ export default function Home() {
     <SettingsProvider>
       <main id="main" className={layout.layout}>
         <div className={layout.layout_sidebar}>
-          <h1 className={layout.layout_title}>Responsive Type</h1>
+          <h1 className={layout.layout_title}>
+            <span>Responsive</span>
+            <span>Type</span>
+            <span className={layout.layout_title_line}></span>
+          </h1>
+          <p className={layout.layout_disclaimer}>
+            This tool is best used on a larger tablet or desktop computer.
+          </p>
           <Controls />
         </div>
         <div className={layout.layout_content}>

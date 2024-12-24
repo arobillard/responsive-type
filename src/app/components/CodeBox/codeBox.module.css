@@ -28,8 +28,10 @@
   width: 100vi;
   overflow-x: scroll;
   display: block;
-  padding-inline: var(--spacer-base);
-  margin-inline: calc(-1 * var(--spacer-base));
+  padding: var(--spacer-m);
+  background-color: var(--color-primary-pale);
+  border-radius: var(--radius);
+  margin: 0;
 }
 
 @media only screen and (min-width: 45em) {

@@ -9,7 +9,7 @@ import Grid from '../Grid/Grid';
 export default function ScalingControls() {
   const [settings, updateSettings] = useSettings();
 
-  const { scalingType, upperScale, lowerScale } = settings;
+  const { scalingType, upperScale, lowerScale, scalingOpen } = settings;
 
   const [usingCustomLowerValue, setUsingCustomLowerValue] = useState(false);
   const [usingCustomUpperValue, setUsingCustomUpperValue] = useState(false);
@@ -103,10 +103,15 @@ export default function ScalingControls() {
     return <p>Loading...</p>;
   }
 
+  function setCollapseStatus(status) {
+    updateSettings({ scalingOpen: status });
+  }
+
   return (
     <CollapseBox
       heading={{ text: 'Scaling', icon: 'signal_cellular_alt' }}
-      defaultExpanded
+      callBack={setCollapseStatus}
+      defaultExpanded={scalingOpen}
     >
       <Grid gap="var(--spacer-m)" padding="var(--spacer-m)">
         <div className={controls.grid_unit}>

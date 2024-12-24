@@ -9,7 +9,6 @@ import Heading from '../Heading';
 import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
 import { useEffect, useState } from 'react';
 import { useSettings } from '@/context/SettingsContext';
-import EditPreviewText from './EditPreviewText/EditPreviewText';
 import Button from '../Button/Button';
 import CollapseBox from '../CollapseBox/CollapseBox';
 import Grid from '../Grid/Grid';
