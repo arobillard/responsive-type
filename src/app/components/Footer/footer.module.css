@@ -10,5 +10,5 @@
 }
 
 .footer_link:where(:hover, :focus-visible) {
-  text-decoration-color: var(--color-accent-bright);
+  text-decoration-color: var(--color-accent);
 }

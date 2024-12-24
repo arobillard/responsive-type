@@ -3,6 +3,8 @@ import { defaultScaleOptions } from '@/helpers/scales';
 import controls from './controls.module.css';
 import Button from '../Button/Button';
 import { useSettings } from '@/context/SettingsContext';
+import CollapseBox from '../CollapseBox/CollapseBox';
+import Grid from '../Grid/Grid';
 
 export default function ScalingControls() {
   const [settings, updateSettings] = useSettings();
@@ -102,102 +104,106 @@ export default function ScalingControls() {
   }
 
   return (
-    <>
-      <h3 className={controls.controls_subHeading}>Scaling</h3>
-      <div className={controls.grid_unit}>
-        <label htmlFor="scaling-type">Scaling Type</label>
-        <select
-          name="scaling-type"
-          id="scaling-type"
-          onChange={(e) => updateSettings({ scalingType: e.target.value })}
-          value={scalingType}
-        >
-          <option value="cqi">cqi</option>
-          <option value="vi">vi</option>
-        </select>
-      </div>
-      <div className={controls.grid_unit}>
-        <label htmlFor="lower-scale">Lower Scale</label>
-        <select
-          name="lower-scale"
-          id="lower-scale"
-          onChange={(e) => changeLowerScale(e.target.value)}
-          value={usingCustomLowerValue ? 'custom' : lowerScale}
-        >
-          {lowerScaleOptions.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {value} – {label}
-            </option>
-          ))}
-          <option value="custom">Custom scale</option>
-        </select>
-        {usingCustomLowerValue && (
-          <>
-            <label
-              className={controls.label_subtle}
-              style={{ marginBlockStart: '0.5rem' }}
-              htmlFor="custom-upper-value"
-            >
-              Custom Lower Value
-            </label>
-            <input
-              type="number"
-              min="1"
-              step="0.05"
-              id="custom-upper-value"
-              name="custom-upper-value"
-              value={lowerScale}
-              onChange={(e) => changeLowerScale(e.target.value)}
-            />
-          </>
-        )}
-      </div>
-      <div className={controls.grid_unit}>
-        <label htmlFor="upper-scale">Upper Scale</label>
-        <select
-          name="upper-scale"
-          id="upper-scale"
-          onChange={(e) => changeUpperScale(e.target.value)}
-          value={usingCustomUpperValue ? 'custom' : upperScale}
-        >
-          {upperScaleOptions.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {value} – {label}
-            </option>
-          ))}
-          <option value="custom">Custom scale</option>
-        </select>
-        {usingCustomUpperValue && (
-          <>
-            <label
-              className={controls.label_subtle}
-              style={{ marginBlockStart: '0.5rem' }}
-              htmlFor="custom-upper-value"
-            >
-              Custom Upper Value
-            </label>
-            <input
-              type="number"
-              min="1"
-              step="0.05"
-              id="custom-upper-value"
-              name="custom-upper-value"
-              value={upperScale}
-              onChange={(e) => changeUpperScale(e.target.value)}
-            />
-          </>
-        )}
-      </div>
+    <CollapseBox
+      heading={{ text: 'Scaling', icon: 'signal_cellular_alt' }}
+      defaultExpanded
+    >
+      <Grid gap="var(--spacer-m)" padding="var(--spacer-m)">
+        <div className={controls.grid_unit}>
+          <label htmlFor="scaling-type">Scaling Type</label>
+          <select
+            name="scaling-type"
+            id="scaling-type"
+            onChange={(e) => updateSettings({ scalingType: e.target.value })}
+            value={scalingType}
+          >
+            <option value="cqi">cqi</option>
+            <option value="vi">vi</option>
+          </select>
+        </div>
+        <div className={controls.grid_unit}>
+          <label htmlFor="lower-scale">Lower Scale</label>
+          <select
+            name="lower-scale"
+            id="lower-scale"
+            onChange={(e) => changeLowerScale(e.target.value)}
+            value={usingCustomLowerValue ? 'custom' : lowerScale}
+          >
+            {lowerScaleOptions.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {value} – {label}
+              </option>
+            ))}
+            <option value="custom">Custom scale</option>
+          </select>
+          {usingCustomLowerValue && (
+            <>
+              <label
+                className={controls.label_subtle}
+                style={{ marginBlockStart: '0.5rem' }}
+                htmlFor="custom-upper-value"
+              >
+                Custom Lower Value
+              </label>
+              <input
+                type="number"
+                min="1"
+                step="0.05"
+                id="custom-upper-value"
+                name="custom-upper-value"
+                value={lowerScale}
+                onChange={(e) => changeLowerScale(e.target.value)}
+              />
+            </>
+          )}
+        </div>
+        <div className={controls.grid_unit}>
+          <label htmlFor="upper-scale">Upper Scale</label>
+          <select
+            name="upper-scale"
+            id="upper-scale"
+            onChange={(e) => changeUpperScale(e.target.value)}
+            value={usingCustomUpperValue ? 'custom' : upperScale}
+          >
+            {upperScaleOptions.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {value} – {label}
+              </option>
+            ))}
+            <option value="custom">Custom scale</option>
+          </select>
+          {usingCustomUpperValue && (
+            <>
+              <label
+                className={controls.label_subtle}
+                style={{ marginBlockStart: '0.5rem' }}
+                htmlFor="custom-upper-value"
+              >
+                Custom Upper Value
+              </label>
+              <input
+                type="number"
+                min="1"
+                step="0.05"
+                id="custom-upper-value"
+                name="custom-upper-value"
+                value={upperScale}
+                onChange={(e) => changeUpperScale(e.target.value)}
+              />
+            </>
+          )}
+        </div>
 
-      {(parseFloat(lowerScale) !== 1.125 ||
-        parseFloat(upperScale) !== 1.333) && (
-        <Button onClick={resetScales} secondary outline>
-          <i className="material-symbols-outlined" aria-hidden="true">
-            undo
-          </i>
-          Reset Scales
-        </Button>
-      )}
-    </>
+        {(parseFloat(lowerScale) !== 1.125 ||
+          parseFloat(upperScale) !== 1.333) && (
+          <Button onClick={resetScales} color="danger" outline>
+            <i className="material-symbols-outlined" aria-hidden="true">
+              undo
+            </i>
+            Reset Scales
+          </Button>
+        )}
+      </Grid>
+    </CollapseBox>
   );
 }

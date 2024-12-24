@@ -1,0 +1,6 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 1), 1fr);
+  gap: var(--gap, var(--spacer-base));
+  padding: var(--padding, 0);
+}

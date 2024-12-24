@@ -18,19 +18,16 @@
 .preview_button_wrap {
   display: flex;
   gap: var(--spacer-m);
-  padding-inline: var(--spacer-base);
-  padding-block-start: var(--spacer-base);
 }
 
 .preview_title {
   text-transform: uppercase;
   margin: 0;
-  font-size: var(--type-step-3);
+  font-size: var(--type-scale-h4);
   flex-grow: 1;
 }
 
 .preview_content {
-  padding: var(--spacer-base);
   overflow-x: scroll;
   container-type: inline-size;
 }
@@ -43,4 +40,8 @@
   white-space: nowrap;
   margin-block-end: var(--spacer-base);
   font-weight: bold;
+}
+
+.preview_content p {
+  margin: 0;
 }

@@ -10,29 +10,48 @@
 }
 
 .layout {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
   min-height: 100dvh;
+  padding: var(--spacer-base);
 
   @media only screen and (min-width: 50em) {
+    display: grid;
     grid-template-columns: 20rem 1fr;
+    gap: 0;
+    padding: 0;
   }
 }
 
 .layout_sidebar {
-  padding: var(--spacer-base);
-  background-color: var(--color-primary);
+  display: contents;
+  /* background-color: var(--color-primary); */
+  container-type: inline-size;
 
   @media only screen and (min-width: 50em) {
+    display: block;
     max-height: 100vh;
     max-height: 100dvh;
     overflow-y: scroll;
+    padding: var(--spacer-base);
   }
 }
 
+.layout_title {
+  font-size: var(--type-scale-xxxl);
+}
+
 .layout_content {
+  display: contents;
+  gap: var(--spacer-m);
+  align-self: start;
   @media only screen and (min-width: 50em) {
+    display: grid;
     max-height: 100vh;
     max-height: 100dvh;
     overflow-y: scroll;
+    padding-block: var(--spacer-base);
+    padding-inline-end: var(--spacer-base);
   }
 }

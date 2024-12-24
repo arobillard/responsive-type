@@ -13,7 +13,15 @@
 
 .codeBox_title {
   text-transform: uppercase;
-  font-size: var(--type-step-3);
+  font-size: var(--type-scale-h4);
+}
+
+.codeBox_copy_button {
+  justify-self: start;
+  /* @media only screen and (min-width: 80rem) {
+    position: absolute;
+    inset: var(--spacer-m) var(--spacer-ml) auto auto;
+  } */
 }
 
 .pre {

@@ -80,7 +80,7 @@ export default function EditPreviewText() {
               <Button
                 style={{ flex: '1 1' }}
                 onClick={resetText}
-                secondary
+                color="danger"
                 outline
               >
                 <i className="material-symbols-outlined" aria-hidden="true">
@@ -93,7 +93,7 @@ export default function EditPreviewText() {
             <Button
               style={{ flex: '1 1' }}
               onClick={() => setActive(false)}
-              secondary
+              color="grey"
               outline
             >
               <i className="material-symbols-outlined" aria-hidden="true">

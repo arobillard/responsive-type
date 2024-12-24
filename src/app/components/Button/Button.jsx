@@ -1,23 +1,36 @@
 import { apply_classes } from '@/helpers/styling';
 import button from './button.module.css';
+import Link from 'next/link';
 
 export default function Button({
   children,
-  secondary,
+  className,
+  color,
   outline,
   paddingSubtle,
-  hoverSuccess,
-  hoverSecondary,
   onClick,
   style,
+  href,
 }) {
   const class_list = [button.button];
 
+  if (className) class_list.push(className);
   if (outline) class_list.push(button.button_outline);
-  if (secondary) class_list.push(button.button_secondary);
+  if (color) class_list.push(button[`button_${color}`]);
   if (paddingSubtle) class_list.push(button.button_paddingSubtle);
-  if (hoverSuccess) class_list.push(button.button_hoverSuccess);
-  if (hoverSecondary) class_list.push(button.button_hoverSecondary);
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        style={style}
+        className={apply_classes(class_list)}
+        onClick={onClick}
+      >
+        {children}
+      </Link>
+    );
+  }
 
   return (
     <button

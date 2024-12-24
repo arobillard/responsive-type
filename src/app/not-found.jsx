@@ -1,7 +1,7 @@
 import layout from './styles/layout.module.css';
 import not_found from './styles/notFound.module.css';
 import { apply_classes } from '@/helpers/styling';
-import Btn from './components/Button/Btn';
+import Button from './components/Button/Button';
 
 export default function NotFound() {
   return (
@@ -11,7 +11,9 @@ export default function NotFound() {
           className={apply_classes([layout.container, layout.container_narrow])}
         >
           <h1>Sorry, nothing here.</h1>
-          <Btn href="/">Return to app</Btn>
+          <Button href="/" color="danger" outline>
+            Return to app
+          </Button>
         </div>
       </header>
     </main>
