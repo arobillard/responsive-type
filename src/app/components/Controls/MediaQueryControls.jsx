@@ -8,6 +8,8 @@ import controls from './controls.module.css';
 import Button from '../Button/Button';
 import ScreenReaderText from '../accessibility/ScreenReaderText/ScreenReaderText';
 import { useSettings } from '@/context/SettingsContext';
+import CollapseBox from '../CollapseBox/CollapseBox';
+import Grid from '../Grid/Grid';
 
 export default function MediaQueryControls() {
   const [settings, updateSettings] = useSettings();
@@ -173,116 +175,118 @@ export default function MediaQueryControls() {
   }
 
   return (
-    <>
-      <h3 className={controls.controls_subHeading}>Media Queries</h3>
-      {mediaQueries.map(({ label, minWidth, scale, id }, i) => {
-        // console.log(scale);
-        return (
-          <div className={controls.mediaQuery_item} key={`mq-${id}`}>
-            <label htmlFor={`label-${i}`} className="srt">
-              MQ Label
-            </label>
-            <input
-              type="text"
-              id={`label-${i}`}
-              name={`label-${i}`}
-              value={label}
-              onChange={(e) => updateMediaQuery(i, 'label', e.target.value)}
-            />
+    <CollapseBox
+      heading={{ text: 'Media Queries', icon: 'signal_cellular_alt' }}
+      defaultExpanded
+    >
+      <Grid gap="var(--spacer-m)" padding="var(--spacer-m)">
+        {mediaQueries.map(({ label, minWidth, scale, id }, i) => {
+          // console.log(scale);
+          return (
+            <div className={controls.mediaQuery_item} key={`mq-${id}`}>
+              <label htmlFor={`label-${i}`} className="srt">
+                MQ Label
+              </label>
+              <input
+                type="text"
+                id={`label-${i}`}
+                name={`label-${i}`}
+                value={label}
+                onChange={(e) => updateMediaQuery(i, 'label', e.target.value)}
+                required
+              />
 
-            <label htmlFor={`min-width-${i}`} className="srt">
-              {label} min-width
-            </label>
-            <input
-              type="text"
-              id={`min-width-${i}`}
-              name={`min-width-${i}`}
-              value={minWidth}
-              className={i === 0 ? controls.mediaQuery_span : ''}
-              disabled={i === 0}
-              onChange={(e) => updateMediaQuery(i, 'minWidth', e.target.value)}
-            />
+              <label htmlFor={`min-width-${i}`} className="srt">
+                {label} min-width
+              </label>
+              <input
+                type="text"
+                id={`min-width-${i}`}
+                name={`min-width-${i}`}
+                value={minWidth}
+                className={i === 0 ? controls.mediaQuery_span : ''}
+                disabled={i === 0}
+                onChange={(e) =>
+                  updateMediaQuery(i, 'minWidth', e.target.value)
+                }
+                required={i !== 0}
+              />
 
-            {i !== 0 && (
-              <Button
-                onClick={() => removeMediaQuery(i)}
-                secondary
-                outline
-                paddingSubtle
+              {i !== 0 && (
+                <Button
+                  onClick={() => removeMediaQuery(i)}
+                  color="danger"
+                  outline
+                  paddingSubtle
+                >
+                  <i className="material-symbols-outlined" aria-hidden="true">
+                    delete
+                  </i>
+                </Button>
+              )}
+
+              <label htmlFor={`scale-${i}`} className="srt">
+                {label} Scale
+              </label>
+              <select
+                name={`scale-${i}`}
+                id={`scale-${i}`}
+                value={scale.label === 'Custom' ? 'custom' : scale.value}
+                onChange={(e) => updateMediaQuery(i, 'scale', e.target.value)}
+                className={controls.mediaQuery_fullSpan}
               >
-                <i className="material-symbols-outlined" aria-hidden="true">
-                  delete
-                </i>
-              </Button>
-            )}
-
-            <label htmlFor={`scale-${i}`} className="srt">
-              {label} Scale
-            </label>
-            <select
-              name={`scale-${i}`}
-              id={`scale-${i}`}
-              value={scale.label === 'Custom' ? 'custom' : scale.value}
-              onChange={(e) => updateMediaQuery(i, 'scale', e.target.value)}
-              className={controls.mediaQuery_fullSpan}
+                {defaultScaleOptions.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {value} – {label}
+                  </option>
+                ))}
+                <option value="custom">Custom</option>
+              </select>
+              {scale.label === 'Custom' && (
+                <>
+                  <label htmlFor={`custom-scale-${i}`} className="srt">
+                    {label} custom scale
+                  </label>
+                  <input
+                    type="number"
+                    id={`custom-scale-${i}`}
+                    name={`custom-scale-${i}`}
+                    value={scale.value}
+                    className={controls.mediaQuery_fullSpan}
+                    onChange={(e) =>
+                      updateMediaQuery(i, 'custom-scale', e.target.value)
+                    }
+                  />
+                </>
+              )}
+            </div>
+          );
+        })}
+        <div style={{ display: 'flex', gap: 'var(--spacer-m)' }}>
+          {mediaQueries.length < 8 && (
+            <Button style={{ flexGrow: '1' }} onClick={addMediaQuery} outline>
+              <i className="material-symbols-outlined" aria-hidden="true">
+                add_circle
+              </i>
+              <ScreenReaderText>Add media query</ScreenReaderText>
+            </Button>
+          )}
+          {JSON.stringify(mediaQueries) !==
+            JSON.stringify(getInitialMediaQueries()) && (
+            <Button
+              style={{ flexGrow: '1' }}
+              onClick={resetMediaQueries}
+              color="danger"
+              outline
             >
-              {defaultScaleOptions.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {value} – {label}
-                </option>
-              ))}
-              <option value="custom">Custom</option>
-            </select>
-            {scale.label === 'Custom' && (
-              <>
-                <label htmlFor={`custom-scale-${i}`} className="srt">
-                  {label} custom scale
-                </label>
-                <input
-                  type="number"
-                  id={`custom-scale-${i}`}
-                  name={`custom-scale-${i}`}
-                  value={scale.value}
-                  className={controls.mediaQuery_fullSpan}
-                  onChange={(e) =>
-                    updateMediaQuery(i, 'custom-scale', e.target.value)
-                  }
-                />
-              </>
-            )}
-          </div>
-        );
-      })}
-      <div style={{ display: 'flex', gap: 'var(--spacer-m)' }}>
-        {mediaQueries.length < 8 && (
-          <Button
-            style={{ flexGrow: '1' }}
-            onClick={addMediaQuery}
-            secondary
-            hoverSuccess
-            outline
-          >
-            <i className="material-symbols-outlined" aria-hidden="true">
-              add_circle
-            </i>
-            <ScreenReaderText>Add media query</ScreenReaderText>
-          </Button>
-        )}
-        {JSON.stringify(mediaQueries) !==
-          JSON.stringify(getInitialMediaQueries()) && (
-          <Button
-            style={{ flexGrow: '1' }}
-            onClick={resetMediaQueries}
-            secondary
-            outline
-          >
-            <i className="material-symbols-outlined" aria-hidden="true">
-              undo
-            </i>
-            <ScreenReaderText>Reset Media Queries</ScreenReaderText>
-          </Button>
-        )}
-      </div>
-    </>
+              <i className="material-symbols-outlined" aria-hidden="true">
+                undo
+              </i>
+              <ScreenReaderText>Reset Media Queries</ScreenReaderText>
+            </Button>
+          )}
+        </div>
+      </Grid>
+    </CollapseBox>
   );
 }

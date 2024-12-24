@@ -9,10 +9,11 @@
 .fontSizeCopyLine_code:where(:not(button > code)) {
   padding: var(--spacer-xs) var(--spacer-s);
   border-radius: var(--radius-s);
-  background-color: var(--color-secondary);
-  border: 0.0625rem solid var(--color-primary);
+  background-color: var(--color-secondary-pale);
+  border: 0.0625rem solid var(--color-secondary);
   vertical-align: middle;
   white-space: nowrap;
+  box-shadow: 0.125rem 0.125rem var(--color-secondary);
 }
 
 .fontSizeCopyLine_code:where(:first-child:not(:last-child)) {
@@ -29,13 +30,14 @@
 
 .fontSizeCopyLine_copy {
   padding: var(--spacer-xs) var(--spacer-s);
-  background-color: var(--color-secondary);
-  border: 0.0625rem solid var(--color-primary);
+  background-color: var(--color-secondary-pale);
+  border: 0.0625rem solid var(--color-secondary);
   border-radius: 0;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
   white-space: nowrap;
+  box-shadow: 0.125rem 0.125rem var(--color-secondary);
 }
 
 .fontSizeCopyLine_copy:where(:last-child) {
@@ -43,9 +45,12 @@
 }
 
 .fontSizeCopyLine_copy:where(:hover, :focus-visible) {
-  background-color: var(--color-primary);
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary-dark);
+  box-shadow: 0.125rem 0.125rem var(--color-secondary-dark);
+  /* color: #fff; */
   cursor: copy;
-  /* color: var(--color-primary-dark); */
+  /* color: var(--color-secondary-dark); */
 }
 
 .fontSizeCopyLine_copied,

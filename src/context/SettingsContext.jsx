@@ -9,6 +9,7 @@ const SettingsContext = createContext();
 
 function SettingsProvider(props) {
   const [settings, setSettings] = useState({
+    loaded: false,
     usingMediaQueries: false,
     scalingType: 'cqi',
     lowerScale: null,
@@ -19,6 +20,9 @@ function SettingsProvider(props) {
     asVariables: true,
     headingText: default_headingText,
     paragraphText: default_paragraphText,
+    scalingOpen: true,
+    previewOpen: true,
+    codeBoxOpen: false,
   });
 
   function updateSettings(updatedSettings) {
@@ -38,6 +42,7 @@ function SettingsProvider(props) {
 
   useEffect(() => {
     setSettings({
+      loaded: true,
       usingMediaQueries:
         localStorage.getItem('rt-usingMediaQueries') === 'true',
       scalingType: localStorage.getItem('rt-scalingType') || 'cqi',
@@ -57,6 +62,13 @@ function SettingsProvider(props) {
         localStorage.getItem('rt-headingText') || default_headingText,
       paragraphText:
         localStorage.getItem('rt-paragraphText') || default_paragraphText,
+      scalingOpen: localStorage.getItem('rt-scalingOpen')
+        ? localStorage.getItem('rt-scalingOpen') === 'true'
+        : true,
+      previewOpen: localStorage.getItem('rt-previewOpen')
+        ? localStorage.getItem('rt-previewOpen') === 'true'
+        : true,
+      codeBoxOpen: localStorage.getItem('rt-codeBoxOpen') === 'true',
     });
   }, []);
 

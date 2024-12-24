@@ -1,3 +1,10 @@
+.switch {
+  --s-size: 1.375rem;
+  --s-gap: calc(var(--s-size) / 11);
+  --s-width: calc((var(--s-size) + var(--s-gap)) * 2);
+  --s-height: calc(var(--s-size) + (var(--s-gap) * 3));
+}
+
 .switch input {
   appearance: none;
   position: absolute;
@@ -8,52 +15,55 @@
 }
 
 .switch_label {
+  --switch-color: var(--color-grey-dark);
+  --switch-bg: transparent;
   display: flex;
-  gap: var(--spacer-base);
+  gap: var(--spacer-m);
   align-items: center;
   justify-content: space-between;
 }
 
+.switch_label_no_spread {
+  justify-content: start;
+}
+
+.switch_label:where(:hover) {
+  --switch-color: var(--color-grey-darker);
+}
+
 .switch_label:has(+ input:focus-visible) {
-  outline: 0.125rem solid var(--color-accent-bright);
+  outline: 0.125rem solid var(--color-accent);
 }
 
 .switch_wrap {
-  width: 2.5rem;
-  height: 1rem;
+  width: var(--s-width);
+  height: var(--s-height);
   display: inline-flex;
   position: relative;
-}
-
-.switch_bar {
-  background-color: #ccc;
+  border: 0.0625rem solid var(--switch-color);
+  background-color: var(--switch-bg);
   border-radius: 3rem;
-  /* border: 0.125rem solid var(--color-primary-dark); */
-  box-shadow: 0.125rem 0.125rem 0 var(--color-primary-dark);
-  display: inline-block;
-  width: 100%;
-  transition: background-color var(--transition);
+  transition: border-color var(--transition), background-color var(--transition);
 }
 
 .switch_toggle {
-  width: 1.5rem;
-  height: 1.5rem;
+  display: inline-block;
+  width: var(--s-size);
+  height: var(--s-size);
   border-radius: 50%;
-  background-color: var(--color-secondary);
-  /* border: 0.125rem solid var(--color-primary-dark); */
-  box-shadow: 0.125rem 0.125rem 0 var(--color-primary-dark);
+  background-color: var(--switch-color);
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-start: 0;
+  inset-inline-start: var(--s-gap);
   translate: 0 -50%;
-  transition: translate var(--transition), inset var(--transition);
+  transition: all var(--transition);
 }
 
-.switch_checked .switch_bar {
-  background-color: var(--color-success);
+.switch_checked {
+  --switch-color: var(--color-primary);
+  --switch-bg: var(--color-primary-pale);
 }
 
 .switch_checked .switch_toggle {
-  inset-inline-start: 100%;
-  translate: -100% -50%;
+  inset-inline: calc(100% - (var(--s-size) + var(--s-gap)));
 }

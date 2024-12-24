@@ -1,15 +1,13 @@
-import {
-  generateClampStyles,
-  generateMQStyles,
-  generateStyles,
-} from '@/helpers/scales';
+import { generateClampStyles, generateMQStyles } from '@/helpers/scales';
 import codeBox from './codeBox.module.css';
 import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
 import { useSettings } from '@/context/SettingsContext';
+import CollapseBox from '../CollapseBox/CollapseBox';
+import Grid from '../Grid/Grid';
 
 export default function CodeBox() {
-  const [settings] = useSettings();
+  const [settings, updateSettings] = useSettings();
 
   const {
     usingMediaQueries,
@@ -20,6 +18,7 @@ export default function CodeBox() {
     includeH6,
     extraSteps,
     asVariables,
+    codeBoxOpen,
   } = settings;
 
   const [hasBeenCopied, setHasBeenCopied] = useState(false);
@@ -63,22 +62,39 @@ export default function CodeBox() {
     asVariables,
   ]);
 
+  function setCollapseStatus(status) {
+    updateSettings({ codeBoxOpen: status });
+  }
+
   return (
-    <section className={codeBox.codeBox}>
-      <div className={codeBox.codeBox_header}>
-        <h2 className={codeBox.codeBox_title}>
-          <span className="word_highlight word_highlight--dark">CSS Code</span>
-        </h2>
-        <Button outline onClick={copyCSSCode} hoverSuccess={hasBeenCopied}>
-          <i className={`material-symbols-outlined`} aria-hidden="true">
-            {hasBeenCopied ? 'check_circle' : 'content_paste'}
-          </i>
-          Copy Code
-        </Button>
-      </div>
-      <pre className={codeBox.pre}>
-        <code>{outputCode}</code>
-      </pre>
+    <section>
+      <CollapseBox
+        heading={{ text: 'Code', icon: 'code' }}
+        defaultExpanded={codeBoxOpen}
+        callBack={setCollapseStatus}
+      >
+        <Grid
+          gap="var(--spacer-m)"
+          padding="var(--spacer-m)"
+          style={{ position: 'relative' }}
+        >
+          <Button
+            className={codeBox.codeBox_copy_button}
+            outline={!hasBeenCopied}
+            onClick={copyCSSCode}
+            color={hasBeenCopied ? 'success' : 'secondary'}
+            paddingSubtle
+          >
+            <i className={`material-symbols-outlined`} aria-hidden="true">
+              {hasBeenCopied ? 'check_circle' : 'content_paste'}
+            </i>
+            Copy Code
+          </Button>
+          <pre className={codeBox.pre}>
+            <code>{outputCode}</code>
+          </pre>
+        </Grid>
+      </CollapseBox>
     </section>
   );
 }

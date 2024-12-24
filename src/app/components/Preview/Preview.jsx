@@ -9,8 +9,9 @@ import Heading from '../Heading';
 import FontSizeCopyLine from '../FontSizeCopyLine/FontSizeCopyLine';
 import { useEffect, useState } from 'react';
 import { useSettings } from '@/context/SettingsContext';
-import EditPreviewText from './EditPreviewText/EditPreviewText';
 import Button from '../Button/Button';
+import CollapseBox from '../CollapseBox/CollapseBox';
+import Grid from '../Grid/Grid';
 
 export default function Preview() {
   const [settings, updateSettings] = useSettings();
@@ -25,6 +26,7 @@ export default function Preview() {
     includeH6,
     headingText,
     paragraphText,
+    previewOpen,
   } = settings;
 
   const [styleCode, setStyleCode] = useState(``);
@@ -65,96 +67,106 @@ export default function Preview() {
     usingMediaQueries,
   ]);
 
+  function setCollapseStatus(status) {
+    updateSettings({ previewOpen: status });
+  }
+
   return (
-    <section id="preview" className={preview.preview}>
-      <div className={preview.preview_header}>
-        <h2 className={preview.preview_title}>
-          <span className="word_highlight">Preview</span>
-        </h2>
+    <section id="preview">
+      <CollapseBox
+        heading={{ text: 'Preview', icon: 'text_fields' }}
+        callBack={setCollapseStatus}
+        defaultExpanded={previewOpen}
+      >
+        <Grid gap="var(--spacer-m)" padding="var(--spacer-m)">
+          <div className={preview.preview_button_wrap}>
+            <Button
+              onClick={() => updateSettings({ extraSteps: extraSteps + 1 })}
+              paddingSubtle
+              color="secondary"
+              outline
+            >
+              <i className="material-symbols-outlined" aria-hidden="true">
+                add_circle
+              </i>
+              Add step
+            </Button>
 
-        <EditPreviewText />
-      </div>
-
-      <div className={preview.preview_button_wrap}>
-        <Button
-          onClick={() => updateSettings({ extraSteps: extraSteps + 1 })}
-          outline
-          hoverSuccess
-        >
-          <i className="material-symbols-outlined" aria-hidden="true">
-            add_circle
-          </i>
-          Add step
-        </Button>
-
-        {extraSteps > 0 && (
-          <Button
-            onClick={() => updateSettings({ extraSteps: extraSteps - 1 })}
-            outline
-            hoverSecondary
-          >
-            <i className="material-symbols-outlined" aria-hidden="true">
-              delete
-            </i>
-            Remove step
-          </Button>
-        )}
-        {extraSteps > 1 && (
-          <Button
-            onClick={() => updateSettings({ extraSteps: 0 })}
-            outline
-            hoverSecondary
-          >
-            <i className="material-symbols-outlined" aria-hidden="true">
-              undo
-            </i>
-            Reset steps
-          </Button>
-        )}
-      </div>
-      <style>
-        {`.preview_mediaQuery {
+            {extraSteps > 0 && (
+              <Button
+                onClick={() => updateSettings({ extraSteps: extraSteps - 1 })}
+                paddingSubtle
+                outline
+                color="warning"
+              >
+                <i className="material-symbols-outlined" aria-hidden="true">
+                  delete
+                </i>
+                Remove step
+              </Button>
+            )}
+            {extraSteps > 1 && (
+              <Button
+                onClick={() => updateSettings({ extraSteps: 0 })}
+                paddingSubtle
+                outline
+                color="danger"
+              >
+                <i className="material-symbols-outlined" aria-hidden="true">
+                  undo
+                </i>
+                Reset steps
+              </Button>
+            )}
+          </div>
+          <style>
+            {`.preview_mediaQuery {
             ${styleCode}
           }`}
-      </style>
-      <div className={`preview_mediaQuery ${preview.preview_content}`}>
-        {ruleSets.map(({ selectors, variableName, rules, step }) => {
-          const headingClasses = `${preview.preview_heading} ${selectors[
-            selectors.length - 1
-          ].replace('.', '')}`;
+          </style>
+          <div className={`preview_mediaQuery ${preview.preview_content}`}>
+            {ruleSets.map(({ selectors, variableName, rules, step }) => {
+              const headingClasses = `${preview.preview_heading} ${selectors[
+                selectors.length - 1
+              ].replace('.', '')}`;
 
-          const headingStyles = {};
+              const headingStyles = {};
 
-          if (step > 3) {
-            headingStyles.lineHeight = '1.1';
-          }
+              if (step > 3) {
+                headingStyles.lineHeight = '1.1';
+              }
 
-          let font_size = null;
+              let font_size = null;
 
-          if (rules[0] && !usingMediaQueries) {
-            font_size = rules[0][1];
-          }
+              if (rules[0] && !usingMediaQueries) {
+                font_size = rules[0][1];
+              }
 
-          return (
-            <div key={variableName} className={preview.preview_heading_wrap}>
-              <FontSizeCopyLine
-                tag={selectors[0]}
-                step={step}
-                font_size={font_size}
-              />
-              <Heading
-                className={headingClasses}
-                tag={selectors[0]}
-                style={headingStyles}
-              >
-                {headingText}
-              </Heading>
-            </div>
-          );
-        })}
+              return (
+                <div
+                  key={variableName}
+                  className={preview.preview_heading_wrap}
+                >
+                  <FontSizeCopyLine
+                    tag={selectors[0]}
+                    step={step}
+                    font_size={font_size}
+                  />
+                  <Heading
+                    className={headingClasses}
+                    tag={selectors[0]}
+                    style={headingStyles}
+                  >
+                    {headingText}
+                  </Heading>
+                </div>
+              );
+            })}
 
-        <p>{paragraphText}</p>
-      </div>
+            <p>{paragraphText}</p>
+          </div>
+        </Grid>
+      </CollapseBox>
     </section>
   );
 }
