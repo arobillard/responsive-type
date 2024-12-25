@@ -67,7 +67,7 @@ export default function CodeBox() {
   }
 
   return (
-    <section>
+    <section id="code">
       <CollapseBox
         heading={{ text: 'Code', icon: 'code' }}
         defaultExpanded={codeBoxOpen}

@@ -13,6 +13,11 @@ export default function SkipLinks() {
           Skip to previews
         </a>
       </li>
+      <li>
+        <a className={skipLinks.skipLinks_link} href="#code">
+          Skip to code
+        </a>
+      </li>
     </ul>
   );
 }

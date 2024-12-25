@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react';
 import Heading from '../Heading';
 import collapse_box from './collapseBox.module.css';
+import slugify from 'slugify';
 
 export default function CollapseBox({
   children,
   heading,
+  id,
   icon,
   defaultExpanded,
   callBack,
 }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
+  const [idBase, setIdBase] = useState(id);
 
   useEffect(() => {
     setExpanded(defaultExpanded);
   }, [defaultExpanded]);
+
+  useEffect(() => {
+    if (id) {
+      setIdBase(`${id}-collapsable`);
+    } else {
+      setIdBase(slugify(`${heading?.text}-collapsable`, { lower: true }));
+    }
+  }, [id, heading]);
 
   const headingStyles = {};
   if (heading?.icon) {
@@ -46,6 +57,10 @@ export default function CollapseBox({
       <button
         className={collapse_box.collapse_box_toggle}
         onClick={handleClick}
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={`${idBase}-content`}
+        id={`${idBase}-button`}
       >
         <Heading
           style={headingStyles}
@@ -64,6 +79,9 @@ export default function CollapseBox({
         </i>
       </button>
       <div
+        id={`${idBase}-content`}
+        role="region"
+        aria-labelledby={`${idBase}-button`}
         className={`${collapse_box.collapse_box_content_wrap}${
           expanded ? ` ${collapse_box.collapse_box_open}` : ''
         }`}
